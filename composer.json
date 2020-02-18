@@ -1,0 +1,37 @@
+{
+    "name": "puwnz/google-lib",
+    "description": "Library to communicate with Google API",
+    "type": "library",
+    "keywords": [ "google", "map" ],
+    "authors": [
+        {
+            "name": "Guillaume D.",
+            "email": "guigz-style@live.fr"
+        }
+    ],
+    "require": {
+        "php": "^7.3",
+        "symfony/http-client": "^5.0",
+        "monolog/monolog": "^2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Puwnz\\Google\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Puwnz\\Google\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "tests" : [
+            "php vendor/bin/phpunit --coverage-text"
+        ]
+    },
+    "license": "MIT",
+    "minimum-stability": "stable"
+}
