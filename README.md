@@ -29,3 +29,16 @@ $components = [
 
 $response = $geocode->getGeocodeResults('10 rue de la Paix, Paris', $components);
 ```
+
+## Testing
+
+The bundle is fully unit tested by [PHPUnit](http://www.phpunit.de/) with a code coverage close to **100%**.
+
+## Contribute
+
+We love contributors! Ivory is an open source project. If you'd like to contribute, feel free to propose a PR!
+
+## License
+
+The Ivory Google Map Bundle is under the MIT license. For the full copyright and license information, please read the
+[LICENSE](/LICENSE) file that was distributed with this source code.
