@@ -1,0 +1,89 @@
+version: 2.1
+
+orbs:
+  releaser: puwnz/releaser@0.0.3
+
+x-common: &x-common-php
+  docker:
+    - image: php:7.3.2-fpm-alpine3.8
+      environment:
+        APP_ENV: test
+  working_directory: /var/www/app
+
+jobs:
+  prepare:
+    <<: *x-common-php
+    steps:
+      - checkout
+      - restore_cache:
+          key: composer-{{ checksum "/var/www/app/www/composer.json" }}
+      - run:
+          name: install
+          command: |
+            apk add --update \
+              git composer openssh-client
+            composer install --no-scripts -d www
+            php -d memory_limit=-1 $(which composer) require friendsofphp/php-cs-fixer=^2.15 -d www --no-scripts --dev
+      - persist_to_workspace:
+          root: /var/www/app/www/
+          paths:
+            - ./*
+      - save_cache:
+          key: composer-{{ checksum "/var/www/app/www/composer.json" }}
+          paths: /var/www/app/www/vendor/
+  tests:
+    <<: *x-common-php
+    steps:
+      - attach_workspace:
+          at: /var/www/app/www/
+      - run:
+          name: PHP Unit
+          command: |
+            vendor/bin/phpunit
+          working_directory: www/
+  php-cs:
+    <<: *x-common-php
+    steps:
+      - attach_workspace:
+          at: /var/www/app/www/
+      - run:
+          name: PHP CS Fixer
+          command: |
+            vendor/bin/php-cs-fixer fix --dry-run --diff
+          working_directory: www/
+
+workflows:
+  version: 2
+  push:
+    jobs:
+      - prepare
+      - tests:
+          requires:
+            - prepare
+      - php-cs:
+          requires:
+            - prepare
+      - approval:
+          type: approval
+          requires:
+            - tests
+            - php-cs
+          filters:
+            branches:
+              only:
+                - /hotfix\/.*/
+                - /release\/.*/
+      - releaser/create_patch_tag:
+          requires:
+            - approval
+          filters:
+            branches:
+              only:
+                - /hotfix.*/
+      - releaser/create_minor_tag:
+          requires:
+            - approval
+          filters:
+            branches:
+              only:
+                - /release.*/
