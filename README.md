@@ -17,8 +17,8 @@ composer require puwnz/google-lib
 ```php
 <?php
 
-use \Puwnz\Google\Geocode\GeocodeFactory;
-use Puwnz\Google\Geocode\Type\GeocodeComponentQueryType;
+use \Puwnz\GoogleMapsLib\Geocode\GeocodeFactory;
+use Puwnz\GoogleMapsLib\Geocode\Type\GeocodeComponentQueryType;
 
 
 $geocode = GeocodeFactory::create('google-api-key');

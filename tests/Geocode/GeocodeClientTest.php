@@ -6,7 +6,7 @@ namespace Puwz\Google\Tests\Geocode\Geocode;
 
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
-use Puwnz\Google\Geocode\GeocodeClient;
+use Puwnz\GoogleMapsLib\Geocode\GeocodeClient;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 

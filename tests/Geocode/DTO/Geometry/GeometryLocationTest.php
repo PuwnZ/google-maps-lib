@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Puwnz\Google\Tests\Geocode\DTO\Geometry;
+namespace Puwnz\GoogleMapsLib\Tests\Geocode\DTO\Geometry;
 
 use PHPUnit\Framework\TestCase;
-use Puwnz\Google\Geocode\DTO\Geometry\GeometryLocation;
+use Puwnz\GoogleMapsLib\Geocode\DTO\Geometry\GeometryLocation;
 
 class GeometryLocationTest extends TestCase
 {

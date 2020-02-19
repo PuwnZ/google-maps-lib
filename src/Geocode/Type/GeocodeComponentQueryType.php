@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Puwnz\Google\Geocode\Type;
+namespace Puwnz\GoogleMapsLib\Geocode\Type;
 
 class GeocodeComponentQueryType
 {
