@@ -9,7 +9,7 @@ The Google Lib project provides a Google Map integration for you PHP 7.3+ projec
 To install this lib you can just use composer :
 
 ```
-composer require puwnz/google-lib
+composer require puwnz/google-maps-lib
 ```
 
 ## Integration
