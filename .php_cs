@@ -21,7 +21,11 @@ return PhpCsFixer\Config::create()
             'spacing' => 'one',
         ],
         'yoda_style' => false,
-        'single_trait_insert_per_statement' => false,
-        'no_empty_phpdoc' => true
+        'no_empty_phpdoc' => true,
+        'native_function_invocation' => true,
+        'fully_qualified_strict_types' => true,
+        'method_argument_space' => [
+            'on_multiline' => 'ensure_fully_multiline',
+        ],
     ])
     ->setFinder($finder);

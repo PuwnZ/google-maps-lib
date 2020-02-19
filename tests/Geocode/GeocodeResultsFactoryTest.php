@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace Puwz\Google\Tests\Geocode\Geocode;
 
-use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use PHPUnit\Framework\TestCase;
 use Puwnz\Google\Geocode\DTO\GeocodeAddressComponent;
 use Puwnz\Google\Geocode\DTO\GeocodeGeometry;
 use Puwnz\Google\Geocode\DTO\GeocodeResult;
 use Puwnz\Google\Geocode\DTO\Geometry\GeometryLocation;
 use Puwnz\Google\Geocode\GeocodeResultsFactory;
-use PHPUnit\Framework\TestCase;
 
 class GeocodeResultsFactoryTest extends TestCase
 {
