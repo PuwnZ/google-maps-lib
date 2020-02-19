@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Puwnz\Google\Tests\Geocode;
+namespace Puwnz\GoogleMapsLib\Tests\Geocode;
 
 use PHPUnit\Framework\TestCase;
-use Puwnz\Google\Geocode\GeocodeFactory;
-use Puwnz\Google\Geocode\GeocodeParser;
+use Puwnz\GoogleMapsLib\Geocode\GeocodeFactory;
+use Puwnz\GoogleMapsLib\Geocode\GeocodeParser;
 
 class GeocodeFactoryTest extends TestCase
 {

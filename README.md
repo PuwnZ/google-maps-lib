@@ -17,8 +17,8 @@ composer require puwnz/google-lib
 ```php
 <?php
 
-use \Puwnz\Google\Geocode\GeocodeFactory;
-use Puwnz\Google\Geocode\Type\GeocodeComponentQueryType;
+use Puwnz\GoogleMapsLib\Geocode\GeocodeFactory;
+use Puwnz\GoogleMapsLib\Geocode\Type\GeocodeComponentQueryType;
 
 
 $geocode = GeocodeFactory::create('google-api-key');
@@ -40,5 +40,5 @@ We love contributors! This is an open source project. If you'd like to contribut
 
 ## License
 
-The Ivory Google Map Bundle is under the MIT license. For the full copyright and license information, please read the
+The Google Map Lib is under the MIT license. For the full copyright and license information, please read the
 [LICENSE](/LICENSE) file that was distributed with this source code.

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Puwnz\Google\Tests\Geocode\DTO;
+namespace Puwnz\GoogleMapsLib\Tests\Geocode\DTO;
 
 use PHPUnit\Framework\TestCase;
-use Puwnz\Google\Geocode\DTO\GeocodeAddressComponent;
+use Puwnz\GoogleMapsLib\Geocode\DTO\GeocodeAddressComponent;
 
 class GeocodeAddressComponentTest extends TestCase
 {

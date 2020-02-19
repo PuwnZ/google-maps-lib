@@ -1,5 +1,5 @@
 {
-    "name": "puwnz/google-lib",
+    "name": "puwnz/google-maps-lib",
     "description": "Library to communicate with Google API",
     "type": "library",
     "keywords": [ "google", "map" ],
@@ -19,12 +19,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Puwnz\\Google\\": "src/"
+            "Puwnz\\GoogleMapsLib\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Puwnz\\Google\\Tests\\": "tests/"
+            "Puwnz\\GoogleMapsLib\\Tests\\": "tests/"
         }
     },
     "scripts": {
