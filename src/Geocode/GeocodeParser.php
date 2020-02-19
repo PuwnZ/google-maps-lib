@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Puwnz\Google\Geocode;
+namespace Puwnz\GoogleMapsLib\Geocode;
 
 class GeocodeParser
 {

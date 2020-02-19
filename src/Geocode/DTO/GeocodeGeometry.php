@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Puwnz\Google\Geocode\DTO;
+namespace Puwnz\GoogleMapsLib\Geocode\DTO;
 
-use Puwnz\Google\Geocode\DTO\Geometry\GeometryLocation;
+use Puwnz\GoogleMapsLib\Geocode\DTO\Geometry\GeometryLocation;
 
 class GeocodeGeometry
 {

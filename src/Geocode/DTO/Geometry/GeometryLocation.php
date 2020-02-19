@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Puwnz\Google\Geocode\DTO\Geometry;
+namespace Puwnz\GoogleMapsLib\Geocode\DTO\Geometry;
 
 class GeometryLocation
 {

@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Puwz\Google\Tests\Geocode\Geocode;
 
 use PHPUnit\Framework\TestCase;
-use Puwnz\Google\Geocode\GeocodeClient;
-use Puwnz\Google\Geocode\GeocodeParser;
-use Puwnz\Google\Geocode\GeocodeResultsFactory;
+use Puwnz\GoogleMapsLib\Geocode\GeocodeClient;
+use Puwnz\GoogleMapsLib\Geocode\GeocodeParser;
+use Puwnz\GoogleMapsLib\Geocode\GeocodeResultsFactory;
 
 class GeocodeParserTest extends TestCase
 {
