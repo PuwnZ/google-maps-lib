@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Puwnz\Google\Tests\Geocode\DTO;
+namespace Puwnz\GoogleMapsLib\Tests\Geocode\DTO;
 
 use PHPUnit\Framework\TestCase;
-use Puwnz\Google\Geocode\DTO\GeocodeAddressComponent;
-use Puwnz\Google\Geocode\DTO\GeocodeGeometry;
-use Puwnz\Google\Geocode\DTO\GeocodeResult;
+use Puwnz\GoogleMapsLib\Geocode\DTO\GeocodeAddressComponent;
+use Puwnz\GoogleMapsLib\Geocode\DTO\GeocodeGeometry;
+use Puwnz\GoogleMapsLib\Geocode\DTO\GeocodeResult;
 
 class GeocodeResultTest extends TestCase
 {
