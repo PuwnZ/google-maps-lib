@@ -40,7 +40,7 @@ jobs:
           name: PHP Unit
           command: |
             vendor/bin/phpunit
-          working_directory: www/
+          working_directory: /
   php-cs:
     <<: *x-common-php
     steps:
@@ -50,7 +50,7 @@ jobs:
           name: PHP CS Fixer
           command: |
             vendor/bin/php-cs-fixer fix --dry-run --diff
-          working_directory: www/
+          working_directory: /
 
 workflows:
   version: 2
