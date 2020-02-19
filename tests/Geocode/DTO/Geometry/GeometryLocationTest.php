@@ -26,5 +26,4 @@ class GeometryLocationTest extends TestCase
         $geometryLocation->setLongitude($value);
         TestCase::assertEquals($value, $geometryLocation->getLongitude());
     }
-
 }

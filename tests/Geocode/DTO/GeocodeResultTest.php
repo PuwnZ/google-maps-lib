@@ -11,14 +11,14 @@ use Puwnz\Google\Geocode\DTO\GeocodeResult;
 
 class GeocodeResultTest extends TestCase
 {
-    public function testGeocodeAddressComponent(): void
+    public function testGeocodeAddressComponent() : void
     {
         $geocodeResult = new GeocodeResult();
 
         $values = [
           $this->createMock(GeocodeAddressComponent::class),
           $this->createMock(GeocodeAddressComponent::class),
-          $this->createMock(GeocodeAddressComponent::class)
+          $this->createMock(GeocodeAddressComponent::class),
         ];
 
         $geocodeResult->setGeocodeAddressComponent(...$values);
@@ -26,7 +26,7 @@ class GeocodeResultTest extends TestCase
         TestCase::assertEquals($values, $geocodeResult->getGeocodeAddressComponents());
     }
 
-    public function testFormattedAddress(): void
+    public function testFormattedAddress() : void
     {
         $geocodeResult = new GeocodeResult();
         $value = 'mock-formatted_address';
@@ -35,7 +35,7 @@ class GeocodeResultTest extends TestCase
         TestCase::assertEquals($value, $geocodeResult->getFormattedAddress());
     }
 
-    public function testTypes(): void
+    public function testTypes() : void
     {
         $geocodeResult = new GeocodeResult();
         $values = [
@@ -48,7 +48,7 @@ class GeocodeResultTest extends TestCase
         TestCase::assertEquals($values, $geocodeResult->getTypes());
     }
 
-    public function testPlaceId(): void
+    public function testPlaceId() : void
     {
         $geocodeResult = new GeocodeResult();
         $value = 'mock-place_id';
@@ -57,7 +57,7 @@ class GeocodeResultTest extends TestCase
         TestCase::assertEquals($value, $geocodeResult->getPlaceId());
     }
 
-    public function testPartialMatch(): void
+    public function testPartialMatch() : void
     {
         $geocodeResult = new GeocodeResult();
         $value = true;
@@ -66,7 +66,7 @@ class GeocodeResultTest extends TestCase
         TestCase::assertEquals($value, $geocodeResult->isPartialMatch());
     }
 
-    public function testGeometry(): void
+    public function testGeometry() : void
     {
         $geocodeResult = new GeocodeResult();
         $value = $this->createMock(GeocodeGeometry::class);
@@ -74,5 +74,4 @@ class GeocodeResultTest extends TestCase
 
         TestCase::assertEquals($value, $geocodeResult->getGeometry());
     }
-
 }
