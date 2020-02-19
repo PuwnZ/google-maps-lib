@@ -36,7 +36,7 @@ The bundle is fully unit tested by [PHPUnit](http://www.phpunit.de/) with a code
 
 ## Contribute
 
-We love contributors! Ivory is an open source project. If you'd like to contribute, feel free to propose a PR!
+We love contributors! This is an open source project. If you'd like to contribute, feel free to propose a PR!
 
 ## License
 
