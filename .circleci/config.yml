@@ -23,7 +23,7 @@ jobs:
             apk add --update \
               git composer openssh-client
             composer install --no-scripts
-            php -d memory_limit=-1 $(which composer) require friendsofphp/php-cs-fixer=^2.15 --no-scripts --dev --allow-risky=yes
+            php -d memory_limit=-1 $(which composer) require friendsofphp/php-cs-fixer=^2.15 --no-scripts --dev
       - persist_to_workspace:
           root: /var/www/app/
           paths:
@@ -49,7 +49,7 @@ jobs:
       - run:
           name: PHP CS Fixer
           command: |
-            vendor/bin/php-cs-fixer fix --dry-run --diff
+            vendor/bin/php-cs-fixer fix --dry-run --diff  --allow-risky=yes
           working_directory: /var/www/app/
 
 workflows:
