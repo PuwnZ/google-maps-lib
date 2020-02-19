@@ -39,9 +39,8 @@ jobs:
       - run:
           name: PHP Unit
           command: |
-            ls -al
             vendor/bin/phpunit
-          working_directory: /
+          working_directory: /var/www/app/
   php-cs:
     <<: *x-common-php
     steps:
@@ -50,9 +49,8 @@ jobs:
       - run:
           name: PHP CS Fixer
           command: |
-            ls -al
             vendor/bin/php-cs-fixer fix --dry-run --diff
-          working_directory: /
+          working_directory: /var/www/app/
 
 workflows:
   version: 2
