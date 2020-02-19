@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace Puwz\Google\Tests\Geocode\Geocode;
 
-use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use PHPUnit\Framework\TestCase;
 use Puwnz\Google\Geocode\GeocodeClient;
 use Puwnz\Google\Geocode\GeocodeParser;
 use Puwnz\Google\Geocode\GeocodeResultsFactory;
-use PHPUnit\Framework\TestCase;
 
 class GeocodeParserTest extends TestCase
 {
