@@ -6,7 +6,9 @@ namespace Puwnz\GoogleMapsLib\Tests\Geocode\Geocode;
 
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
+use Puwnz\GoogleMapsLib\Geocode\Exception\GeocodeComponentQueryException;
 use Puwnz\GoogleMapsLib\Geocode\GeocodeClient;
+use Puwnz\GoogleMapsLib\Geocode\Type\GeocodeComponentQueryType;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
@@ -35,11 +37,24 @@ class GeocodeClientTest extends TestCase
         $this->service = new GeocodeClient($this->client, $this->logger, $this->googleApiKey);
     }
 
-    public function testGetGeocodeThrow() : void
+    public function testGetGeocodeThrowUnknownComponent() : void
     {
         $address = 'mocked-address';
         $queryComponents = [
             'mocked-component' => 'mocked-value',
+        ];
+
+        $this->expectException(GeocodeComponentQueryException::class);
+        $this->expectExceptionMessage('Geocode component query not found "mocked-component"');
+
+        $this->service->getGeocode($address, $queryComponents);
+    }
+
+    public function testGetGeocodeThrow() : void
+    {
+        $address = 'mocked-address';
+        $queryComponents = [
+            GeocodeComponentQueryType::COUNTRY => 'mocked-value',
         ];
 
         $this->client->expects($this->once())
@@ -48,7 +63,7 @@ class GeocodeClientTest extends TestCase
 
         $this->logger->expects($this->once())
             ->method('error')
-            ->with('mocked-exception', ['address' => $address, 'components' => 'mocked-component:mocked-value']);
+            ->with('mocked-exception', ['address' => $address, 'components' => GeocodeComponentQueryType::COUNTRY . ':mocked-value']);
 
         $this->service->getGeocode($address, $queryComponents);
     }
@@ -57,7 +72,7 @@ class GeocodeClientTest extends TestCase
     {
         $address = 'mocked-address';
         $queryComponents = [
-            'mocked-component' => 'mocked-value',
+            GeocodeComponentQueryType::COUNTRY => 'mocked-value',
         ];
 
         $response = $this->createMock(ResponseInterface::class);
@@ -71,7 +86,7 @@ class GeocodeClientTest extends TestCase
                     'query' => [
                         'address' => $address,
                         'key' => $this->googleApiKey,
-                        'components' => 'mocked-component:mocked-value',
+                        'components' => GeocodeComponentQueryType::COUNTRY . ':mocked-value',
                     ],
                 ]
             )
