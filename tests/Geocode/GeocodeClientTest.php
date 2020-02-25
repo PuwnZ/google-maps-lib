@@ -26,7 +26,7 @@ class GeocodeClientTest extends TestCase
     /** @var \PHPUnit\Framework\MockObject\MockObject|LoggerInterface */
     private $logger;
 
-    protected function setUp(): void
+    protected function setUp() : void
     {
         parent::setUp();
 
@@ -37,7 +37,7 @@ class GeocodeClientTest extends TestCase
         $this->service = new GeocodeClient($this->client, $this->logger, $this->googleApiKey);
     }
 
-    public function testGetGeocodeThrowUnknownComponent(): void
+    public function testGetGeocodeThrowUnknownComponent() : void
     {
         $address = 'mocked-address';
         $queryComponents = [
@@ -50,7 +50,7 @@ class GeocodeClientTest extends TestCase
         $this->service->getGeocode($address, $queryComponents);
     }
 
-    public function testGetGeocodeThrow(): void
+    public function testGetGeocodeThrow() : void
     {
         $address = 'mocked-address';
         $queryComponents = [
@@ -68,7 +68,7 @@ class GeocodeClientTest extends TestCase
         $this->service->getGeocode($address, $queryComponents);
     }
 
-    public function testGetGeocode(): void
+    public function testGetGeocode() : void
     {
         $address = 'mocked-address';
         $queryComponents = [
@@ -86,7 +86,7 @@ class GeocodeClientTest extends TestCase
                     'query' => [
                         'address' => $address,
                         'key' => $this->googleApiKey,
-                        'components' => GeocodeComponentQueryType::COUNTRY.':mocked-value',
+                        'components' => GeocodeComponentQueryType::COUNTRY . ':mocked-value',
                     ],
                 ]
             )

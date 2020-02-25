@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Puwnz\GoogleMapsLib\Geocode;
 
 use Psr\Log\LoggerInterface;
-use Puwnz\GoogleMapsLib\Geocode\Type\GeocodeComponentQueryType;
 use Puwnz\GoogleMapsLib\Geocode\Exception\GeocodeComponentQueryException;
+use Puwnz\GoogleMapsLib\Geocode\Type\GeocodeComponentQueryType;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class GeocodeClient
@@ -30,7 +30,7 @@ class GeocodeClient
     /**
      * @throws GeocodeComponentQueryException
      */
-    public function getGeocode(string $address, array $queryComponents): array
+    public function getGeocode(string $address, array $queryComponents) : array
     {
         $components = $this->buildQueryComponents($queryComponents);
 
@@ -61,12 +61,12 @@ class GeocodeClient
     /**
      * @throws GeocodeComponentQueryException
      */
-    private function buildQueryComponents(array $queryComponents): string
+    private function buildQueryComponents(array $queryComponents) : string
     {
         $components = [];
 
         foreach ($queryComponents as $keyComponent => $valueComponent) {
-            if (!in_array($keyComponent, GeocodeComponentQueryType::TYPES)) {
+            if (!\in_array($keyComponent, GeocodeComponentQueryType::TYPES)) {
                 throw new GeocodeComponentQueryException($keyComponent);
             }
 
