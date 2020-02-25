@@ -24,8 +24,6 @@ class GeocodeParser
 
     /**
      * @deprecated this method is deprecated and will be removed in puwnz/google-maps-lib 1.0, use \Puwnz\GoogleMapsLib\Geocode\GeocodeParser::getGeocodeByAddress instead
-     *
-     * @throws GeocodeComponentQueryException
      */
     public function getGeocodeResults(string $address, array $queryComponents = []) : array
     {
@@ -34,9 +32,6 @@ class GeocodeParser
         return $this->getGeocodeByBuilder($addressQuery);
     }
 
-    /**
-     * @throws GeocodeComponentQueryException
-     */
     public function getGeocodeByBuilder(QueryBuilderInterface $queryBuilder) : array
     {
         $response = $this->geocodeClient->getGeocodeWithBuilder($queryBuilder);

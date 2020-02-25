@@ -31,7 +31,7 @@ class GeocodeParserTest extends TestCase
         $this->service = new GeocodeParser($this->geocodeClient, $this->geocodeResultsFactory);
     }
 
-    public function testGetGeocodeResult() : void
+    public function testGetGeocodeByBuilder() : void
     {
         $address = 'mocked-address';
         $response = [];
