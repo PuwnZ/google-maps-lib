@@ -18,6 +18,9 @@ class GeocodeParser
         $this->geocodeResultsFactory = $geocodeResultsFactory;
     }
 
+    /**
+     * @throws Exception\GeocodeComponentQueryException
+     */
     public function getGeocodeResults(string $address, array $queryComponents = []) : array
     {
         $response = $this->geocodeClient->getGeocode($address, $queryComponents);
