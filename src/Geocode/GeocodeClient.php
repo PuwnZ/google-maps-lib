@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Puwnz\GoogleMapsLib\Geocode;
 
 use Psr\Log\LoggerInterface;
-use Puwnz\GoogleMapsLib\Geocode\Exception\GeocodeComponentQueryException;
 use Puwnz\GoogleMapsLib\Geocode\Type\GeocodeComponentQueryType;
+use Puwnz\GoogleMapsLib\Geocode\Exception\GeocodeComponentQueryException;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class GeocodeClient
