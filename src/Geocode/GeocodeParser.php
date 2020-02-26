@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Puwnz\GoogleMapsLib\Geocode;
 
-use Puwnz\GoogleMapsLib\Geocode\Exception\GeocodeComponentQueryException;
 use Puwnz\GoogleMapsLib\Geocode\QueryBuilder\AddressQueryBuilder;
 use Puwnz\GoogleMapsLib\Geocode\QueryBuilder\QueryBuilderInterface;
 
