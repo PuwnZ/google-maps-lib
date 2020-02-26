@@ -18,8 +18,8 @@ composer require puwnz/google-maps-lib
 <?php
 
 use Puwnz\GoogleMapsLib\Geocode\GeocodeFactory;
+use Puwnz\GoogleMapsLib\Geocode\QueryBuilder\AddressQueryBuilder;
 use Puwnz\GoogleMapsLib\Geocode\Type\GeocodeComponentQueryType;
-
 
 $geocode = GeocodeFactory::create('google-api-key');
 
@@ -27,7 +27,9 @@ $components = [
     GeocodeComponentQueryType::COUNTRY => 'FR'
 ];
 
-$response = $geocode->getGeocodeResults('10 rue de la Paix, Paris', $components);
+$addressBuilder = new AddressQueryBuilder('10 rue de la Paix, Paris', $components);
+
+$response = $geocode->getGeocodeByBuilder($addressBuilder);
 ```
 
 ## Testing

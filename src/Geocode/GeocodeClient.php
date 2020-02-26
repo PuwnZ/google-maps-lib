@@ -6,6 +6,7 @@ namespace Puwnz\GoogleMapsLib\Geocode;
 
 use Psr\Log\LoggerInterface;
 use Puwnz\GoogleMapsLib\Geocode\Exception\GeocodeComponentQueryException;
+use Puwnz\GoogleMapsLib\Geocode\QueryBuilder\QueryBuilderInterface;
 use Puwnz\GoogleMapsLib\Geocode\Type\GeocodeComponentQueryType;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -28,6 +29,8 @@ class GeocodeClient
     }
 
     /**
+     * @deprecated this method is deprecated and will be removed in puwnz/google-maps-lib 1.0, use \Puwnz\GoogleMapsLib\Geocode\GeocodeClient::getGeocodeWithBuilder instead
+     *
      * @throws GeocodeComponentQueryException
      */
     public function getGeocode(string $address, array $queryComponents) : array
@@ -59,6 +62,8 @@ class GeocodeClient
     }
 
     /**
+     * @deprecated this method is deprecated and will be removed in puwnz/google-maps-lib 1.0
+     *
      * @throws GeocodeComponentQueryException
      */
     private function buildQueryComponents(array $queryComponents) : string
@@ -74,5 +79,34 @@ class GeocodeClient
         }
 
         return \implode('|', $components);
+    }
+
+    public function getGeocodeWithBuilder(QueryBuilderInterface $queryBuilder) : array
+    {
+        $query = $queryBuilder->getQuery();
+
+        try {
+            $response = $this->client->request(
+                'GET',
+                'https://maps.googleapis.com/maps/api/geocode/json',
+                [
+                    'query' => \array_merge(
+                        $query,
+                        [
+                            'key' => $this->googleApiKey,
+                        ]
+                    ),
+                ]
+            );
+
+            return $response->toArray();
+        } catch (\Throwable $e) {
+            $this->logger->error(
+                $e->getMessage(),
+                $query
+            );
+
+            return [];
+        }
     }
 }

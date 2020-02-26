@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Puwnz\GoogleMapsLib\Geocode\GeocodeClient;
 use Puwnz\GoogleMapsLib\Geocode\GeocodeParser;
 use Puwnz\GoogleMapsLib\Geocode\GeocodeResultsFactory;
+use Puwnz\GoogleMapsLib\Geocode\QueryBuilder\AddressQueryBuilder;
 
 class GeocodeParserTest extends TestCase
 {
@@ -30,15 +31,17 @@ class GeocodeParserTest extends TestCase
         $this->service = new GeocodeParser($this->geocodeClient, $this->geocodeResultsFactory);
     }
 
-    public function testGetGeocodeResult() : void
+    public function testGetGeocodeByBuilder() : void
     {
         $address = 'mocked-address';
         $response = [];
         $expected = [];
 
+        $queryBuilder = new AddressQueryBuilder($address);
+
         $this->geocodeClient->expects($this->once())
-            ->method('getGeocode')
-            ->with($address, [])
+            ->method('getGeocodeWithBuilder')
+            ->with($queryBuilder)
             ->willReturn($response);
 
         $this->geocodeResultsFactory->expects($this->once())
@@ -46,7 +49,7 @@ class GeocodeParserTest extends TestCase
             ->with($response)
             ->willReturn($expected);
 
-        $actual = $this->service->getGeocodeResults($address);
+        $actual = $this->service->getGeocodeByBuilder($queryBuilder);
 
         TestCase::assertSame($expected, $actual);
     }
