@@ -10,9 +10,9 @@ use Symfony\Component\HttpClient\HttpClient;
 
 class GeocodeFactory
 {
-    public static function create(string $googleApiKey, string $logFilePath = '/var/logs/geocode.log') : GeocodeParser
+    public static function create(string $googleApiKey, string $logFilePath = '/var/logs/geocode.log', float $httpVersion = 2.0) : GeocodeParser
     {
-        $client = HttpClient::create();
+        $client = HttpClient::create(['http_version' => $httpVersion]);
         $logger = new Logger('geocode');
         $logger->pushHandler(new StreamHandler($logFilePath, Logger::DEBUG));
 
