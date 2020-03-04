@@ -21,7 +21,7 @@ use Puwnz\GoogleMapsLib\Geocode\GeocodeFactory;
 use Puwnz\GoogleMapsLib\Geocode\QueryBuilder\AddressQueryBuilder;
 use Puwnz\GoogleMapsLib\Geocode\Type\GeocodeComponentQueryType;
 
-$geocode = GeocodeFactory::create('google-api-key');
+$geocode = GeocodeFactory::create('google-api-key', 'path/log/file', 'http-version');
 
 $components = [
     GeocodeComponentQueryType::COUNTRY => 'FR'
@@ -31,6 +31,9 @@ $addressBuilder = new AddressQueryBuilder('10 rue de la Paix, Paris', $component
 
 $response = $geocode->getGeocodeByBuilder($addressBuilder);
 ```
+The first parameter of factory is required, but the path file for a log and http-version are not.
+
+> `http-version` should be a float.
 
 ## Testing
 
