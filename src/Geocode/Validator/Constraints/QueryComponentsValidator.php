@@ -11,20 +11,20 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class QueryComponentsValidator extends ConstraintValidator
 {
-    public function validate($value, Constraint $constraint): void
+    public function validate($value, Constraint $constraint) : void
     {
         if (!$constraint instanceof QueryComponents) {
             throw new UnexpectedTypeException($constraint, QueryComponents::class);
         }
 
-        if (is_array($value) === false) {
+        if (\is_array($value) === false) {
             throw new \UnexpectedValueException($value, 'array');
         }
 
-        array_map([$this, 'checkIsValid'], array_keys($value), [$constraint]);
+        \array_map([$this, 'checkIsValid'], \array_keys($value), [$constraint]);
     }
 
-    private function checkIsValid(string $keyComponent, Constraint $constraint): void
+    private function checkIsValid(string $keyComponent, Constraint $constraint) : void
     {
         if (\in_array($keyComponent, GeocodeComponentQueryType::TYPES, true) === false) {
             $this->context->buildViolation($constraint->keyIsWrong)

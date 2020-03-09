@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Puwnz\GoogleMapsLib\Geocode\QueryBuilder;
 
-use Puwnz\GoogleMapsLib\Geocode\Exception\GeocodeComponentQueryException;
 use Puwnz\GoogleMapsLib\Geocode\Exception\GeocodeViolationsException;
 use Puwnz\GoogleMapsLib\Geocode\Validator\Constraints\Bounds;
 use Puwnz\GoogleMapsLib\Geocode\Validator\Constraints\QueryComponents;
@@ -29,7 +28,7 @@ class AddressQueryBuilder implements QueryBuilderInterface
         $this->validator = $validator;
     }
 
-    private function buildQueryComponents(): string
+    private function buildQueryComponents() : string
     {
         $components = [];
 
@@ -40,18 +39,18 @@ class AddressQueryBuilder implements QueryBuilderInterface
         return \implode('|', $components);
     }
 
-    private function buildBounds(): string
+    private function buildBounds() : string
     {
         $bounds = [];
 
         foreach ($this->getBounds() as $bound) {
-            $bounds[] = implode(',', $bound);
+            $bounds[] = \implode(',', $bound);
         }
 
-        return implode('|', $bounds);
+        return \implode('|', $bounds);
     }
 
-    public function getQuery(): array
+    public function getQuery() : array
     {
         return [
             'address' => $this->getAddress(),
@@ -60,24 +59,24 @@ class AddressQueryBuilder implements QueryBuilderInterface
         ];
     }
 
-    public function getAddress(): string
+    public function getAddress() : string
     {
         return $this->address;
     }
 
-    public function setAddress(string $address): self
+    public function setAddress(string $address) : self
     {
         $this->address = $address;
 
         return $this;
     }
 
-    public function getComponents(): array
+    public function getComponents() : array
     {
         return $this->components;
     }
 
-    public function setComponents(array $components): AddressQueryBuilder
+    public function setComponents(array $components) : AddressQueryBuilder
     {
         $violations = $this->validator->validate($components, [
             new QueryComponents(),
@@ -92,12 +91,12 @@ class AddressQueryBuilder implements QueryBuilderInterface
         return $this;
     }
 
-    public function getBounds(): array
+    public function getBounds() : array
     {
         return $this->bounds;
     }
 
-    public function setBounds(array $bounds): AddressQueryBuilder
+    public function setBounds(array $bounds) : AddressQueryBuilder
     {
         $violations = $this->validator->validate($bounds, [
             new Bounds(),
