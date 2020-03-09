@@ -71,10 +71,6 @@ class GeocodeClient
         $components = [];
 
         foreach ($queryComponents as $keyComponent => $valueComponent) {
-            if (!\in_array($keyComponent, GeocodeComponentQueryType::TYPES)) {
-                throw new GeocodeComponentQueryException($keyComponent);
-            }
-
             $components[] = \sprintf('%s:%s', $keyComponent, $valueComponent);
         }
 

@@ -28,6 +28,9 @@ class GeocodeParser
     {
         $addressQuery = new AddressQueryBuilder($address, $queryComponents);
 
+        $addressQuery->setAddress($address);
+        $addressQuery->setComponents($queryComponents);
+
         return $this->getGeocodeByBuilder($addressQuery);
     }
 
