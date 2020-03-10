@@ -24,9 +24,6 @@ jobs:
               git composer openssh-client
             composer install --no-scripts
             php -d memory_limit=-1 $(which composer) require friendsofphp/php-cs-fixer=^2.15 --no-scripts --dev
-            apk add --update icu-dev
-            docker-php-ext-configure intl
-            docker-php-ext-install intl
       - persist_to_workspace:
           root: /var/www/app/
           paths:
@@ -42,6 +39,9 @@ jobs:
       - run:
           name: PHP Unit
           command: |
+            apk add --update icu-dev
+            docker-php-ext-configure intl
+            docker-php-ext-install intl
             vendor/bin/phpunit
           working_directory: /var/www/app/
   php-cs:
