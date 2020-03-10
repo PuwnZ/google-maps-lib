@@ -8,6 +8,7 @@ use Puwnz\GoogleMapsLib\Geocode\Type\GeocodeComponentQueryType;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
+use Symfony\Component\Validator\Exception\UnexpectedValueException;
 
 class QueryComponentsValidator extends ConstraintValidator
 {
@@ -18,10 +19,12 @@ class QueryComponentsValidator extends ConstraintValidator
         }
 
         if (\is_array($value) === false) {
-            throw new \UnexpectedValueException($value, 'array');
+            throw new UnexpectedValueException($value, 'array');
         }
 
-        \array_map([$this, 'checkIsValid'], \array_keys($value), [$constraint]);
+        if (\count($value) > 0) {
+            \array_map([$this, 'checkIsValid'], \array_keys($value), [$constraint]);
+        }
     }
 
     private function checkIsValid(string $keyComponent, Constraint $constraint) : void

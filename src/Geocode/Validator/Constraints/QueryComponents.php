@@ -8,5 +8,5 @@ use Symfony\Component\Validator\Constraint;
 
 class QueryComponents extends Constraint
 {
-    public $keyIsWrong = 'Query components key "{{ key }}" not exists';
+    public $keyIsWrong = 'Query components key "{{ key }}" not exists.';
 }

@@ -59,7 +59,7 @@ class AddressQueryBuilder implements QueryBuilderInterface
         ];
     }
 
-    public function getAddress() : string
+    private function getAddress() : string
     {
         return $this->address;
     }
@@ -71,7 +71,7 @@ class AddressQueryBuilder implements QueryBuilderInterface
         return $this;
     }
 
-    public function getComponents() : array
+    private function getComponents() : array
     {
         return $this->components;
     }
@@ -91,7 +91,7 @@ class AddressQueryBuilder implements QueryBuilderInterface
         return $this;
     }
 
-    public function getBounds() : array
+    private function getBounds() : array
     {
         return $this->bounds;
     }

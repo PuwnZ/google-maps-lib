@@ -4,33 +4,41 @@ declare(strict_types=1);
 
 namespace Puwnz\GoogleMapsLib\Geocode\Validator\Constraints;
 
-use Puwnz\GoogleMapsLib\Geocode\Exception\GeocodeBoundsDataException;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
+use Symfony\Component\Validator\Exception\UnexpectedValueException;
 
 class BoundsValidator extends ConstraintValidator
 {
-    public function validate($value, Constraint $constraint) : void
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof Bounds) {
             throw new UnexpectedTypeException($constraint, Bounds::class);
         }
 
         if (\is_array($value) === false) {
-            throw new \UnexpectedValueException($value, 'array');
+            throw new UnexpectedValueException('', 'array');
         }
 
         $this->eligibleData($value, $constraint);
     }
 
-    private function eligibleData($value, Constraint $constraint) : void
+    private function eligibleData($value, Constraint $constraint): void
     {
         $this->keyExists('northeast', $value, $constraint);
         $this->keyExists('southwest', $value, $constraint);
 
-        if (!\is_array($value['northeast']) || !\is_array($value['southwest'])) {
-            throw new GeocodeBoundsDataException();
+        if ($this->context->getViolations()->count() > 0) {
+            return;
+        }
+
+        if (\is_array($value['northeast']) === false) {
+            throw new UnexpectedValueException($value['northeast'], 'array');
+        }
+
+        if (\is_array($value['southwest']) === false) {
+            throw new UnexpectedValueException($value['southwest'], 'array');
         }
 
         if (\count($value['northeast']) !== 2) {
@@ -45,18 +53,22 @@ class BoundsValidator extends ConstraintValidator
                 ->addViolation();
         }
 
-        $this->keyExists('lat', $value['northeast'], $constraint);
-        $this->keyExists('lng', $value['northeast'], $constraint);
+        if ($this->context->getViolations()->count() > 0) {
+            return;
+        }
 
-        $this->keyExists('lat', $value['southwest'], $constraint);
-        $this->keyExists('lng', $value['southwest'], $constraint);
+        $this->keyExists('lat', $value['northeast'], $constraint, 'northeast.lat');
+        $this->keyExists('lng', $value['northeast'], $constraint, 'northeast.lng');
+
+        $this->keyExists('lat', $value['southwest'], $constraint, 'southwest.lat');
+        $this->keyExists('lng', $value['southwest'], $constraint, 'southwest.lng');
     }
 
-    private function keyExists($key, $value, Constraint $constraint) : void
+    private function keyExists($key, $value, Constraint $constraint, string $varKey = null ): void
     {
         if (!\array_key_exists($key, $value)) {
             $this->context->buildViolation($constraint->messageKeyNotExists)
-                ->setParameter('{{ key }}', $key)
+                ->setParameter('{{ key }}', $varKey ?? $key)
                 ->addViolation();
         }
     }
