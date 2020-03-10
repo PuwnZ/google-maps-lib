@@ -26,11 +26,7 @@ class AddressQueryBuilderTest extends TestCase
     {
         $this->expectException(GeocodeViolationsException::class);
         $this->expectExceptionMessage('Bounds key "northeast" are not valid.
-Bounds key "southwest" are not valid.
-Bounds key "lat" not exists.
-Bounds key "lng" not exists.
-Bounds key "lat" not exists.
-Bounds key "lng" not exists.');
+Bounds key "southwest" are not valid.');
 
         $this->service->setBounds([
             'northeast' => [],

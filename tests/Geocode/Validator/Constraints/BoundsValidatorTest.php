@@ -13,12 +13,12 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 class BoundsValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function createValidator(): BoundsValidator
+    protected function createValidator() : BoundsValidator
     {
         return new BoundsValidator();
     }
 
-    public function testValidateNotGoodConstraint(): void
+    public function testValidateNotGoodConstraint() : void
     {
         $this->expectException(UnexpectedTypeException::class);
         $this->expectExceptionMessage('Expected argument of type "Puwnz\GoogleMapsLib\Geocode\Validator\Constraints\Bounds", "Puwnz\GoogleMapsLib\Geocode\Validator\Constraints\QueryComponents" given');
@@ -28,7 +28,7 @@ class BoundsValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate([], $constraint);
     }
 
-    public function testValidateNotArray(): void
+    public function testValidateNotArray() : void
     {
         $this->expectException(UnexpectedValueException::class);
         $this->expectExceptionMessage('Expected argument of type "array", "string" given');
@@ -38,7 +38,7 @@ class BoundsValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate('', $constraint);
     }
 
-    public function testValidateNortheastOrSouthwestMissing(): void
+    public function testValidateNortheastOrSouthwestMissing() : void
     {
         $constraint = new Bounds();
 
@@ -51,7 +51,7 @@ class BoundsValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public function testValidateNortheastNotArray(): void
+    public function testValidateNortheastNotArray() : void
     {
         $constraint = new Bounds();
 
@@ -61,7 +61,7 @@ class BoundsValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate(['northeast' => '', 'southwest' => ''], $constraint);
     }
 
-    public function testValidateSouthwestNotArray(): void
+    public function testValidateSouthwestNotArray() : void
     {
         $constraint = new Bounds();
 
@@ -71,7 +71,7 @@ class BoundsValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate(['northeast' => [], 'southwest' => ''], $constraint);
     }
 
-    public function testValidateNortheastHasNotTwoKeys(): void
+    public function testValidateNortheastHasNotTwoKeys() : void
     {
         $constraint = new Bounds();
 
@@ -84,7 +84,7 @@ class BoundsValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public function testValidateBoundsHasNotLngAndLat(): void
+    public function testValidateBoundsHasNotLngAndLat() : void
     {
         $constraint = new Bounds();
 
@@ -94,7 +94,6 @@ class BoundsValidatorTest extends ConstraintValidatorTestCase
                 'mocked-lng' => '',
             ],
             'southwest' => [
-
                 'mocked-lat' => '',
                 'mocked-lng' => '',
             ],

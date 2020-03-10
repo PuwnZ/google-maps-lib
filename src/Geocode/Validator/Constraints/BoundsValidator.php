@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Exception\UnexpectedValueException;
 
 class BoundsValidator extends ConstraintValidator
 {
-    public function validate($value, Constraint $constraint): void
+    public function validate($value, Constraint $constraint) : void
     {
         if (!$constraint instanceof Bounds) {
             throw new UnexpectedTypeException($constraint, Bounds::class);
@@ -24,7 +24,7 @@ class BoundsValidator extends ConstraintValidator
         $this->eligibleData($value, $constraint);
     }
 
-    private function eligibleData($value, Constraint $constraint): void
+    private function eligibleData($value, Constraint $constraint) : void
     {
         $this->keyExists('northeast', $value, $constraint);
         $this->keyExists('southwest', $value, $constraint);
@@ -64,7 +64,7 @@ class BoundsValidator extends ConstraintValidator
         $this->keyExists('lng', $value['southwest'], $constraint, 'southwest.lng');
     }
 
-    private function keyExists($key, $value, Constraint $constraint, string $varKey = null ): void
+    private function keyExists($key, $value, Constraint $constraint, string $varKey = null) : void
     {
         if (!\array_key_exists($key, $value)) {
             $this->context->buildViolation($constraint->messageKeyNotExists)
