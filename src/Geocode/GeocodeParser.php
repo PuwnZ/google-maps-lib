@@ -6,6 +6,7 @@ namespace Puwnz\GoogleMapsLib\Geocode;
 
 use Puwnz\GoogleMapsLib\Geocode\QueryBuilder\AddressQueryBuilder;
 use Puwnz\GoogleMapsLib\Geocode\QueryBuilder\QueryBuilderInterface;
+use Symfony\Component\Validator\Validation;
 
 class GeocodeParser
 {
@@ -26,7 +27,10 @@ class GeocodeParser
      */
     public function getGeocodeResults(string $address, array $queryComponents = []) : array
     {
-        $addressQuery = new AddressQueryBuilder($address, $queryComponents);
+        $addressQuery = new AddressQueryBuilder(Validation::createValidator());
+
+        $addressQuery->setAddress($address)
+            ->setComponents($queryComponents);
 
         return $this->getGeocodeByBuilder($addressQuery);
     }

@@ -39,6 +39,9 @@ jobs:
       - run:
           name: PHP Unit
           command: |
+            apk add --update icu-dev
+            docker-php-ext-configure intl
+            docker-php-ext-install intl
             vendor/bin/phpunit
           working_directory: /var/www/app/
   php-cs:

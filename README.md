@@ -20,6 +20,7 @@ composer require puwnz/google-maps-lib
 use Puwnz\GoogleMapsLib\Geocode\GeocodeFactory;
 use Puwnz\GoogleMapsLib\Geocode\QueryBuilder\AddressQueryBuilder;
 use Puwnz\GoogleMapsLib\Geocode\Type\GeocodeComponentQueryType;
+use Symfony\Component\Validator\Validation;
 
 $geocode = GeocodeFactory::create('google-api-key', 'path/log/file', 'http-version');
 
@@ -27,7 +28,20 @@ $components = [
     GeocodeComponentQueryType::COUNTRY => 'FR'
 ];
 
-$addressBuilder = new AddressQueryBuilder('10 rue de la Paix, Paris', $components);
+$addressBuilder = new AddressQueryBuilder(Validation::createValidator());
+
+$addressBuilder->setAddress('10 rue de la Paix, Paris')
+    ->setComponents($components)
+    ->setBounds([
+        'northeast' => [
+            'lat' => 0.0,
+            'lng' => 1.0
+        ],
+        'southwest' => [
+            'lat' => -0.0,
+            'lng' => -1.0
+        ]
+    ]);
 
 $response = $geocode->getGeocodeByBuilder($addressBuilder);
 ```
@@ -38,6 +52,13 @@ The first parameter of factory is required, but the path file for a log and http
 ## Testing
 
 The bundle is fully unit tested by [PHPUnit](http://www.phpunit.de/) with a code coverage close to **100%**.
+
+## Exception
+
+Some exceptions are trigger in this lib, the next list explain in few words why :
+
+- *\Puwnz\GoogleMapsLib\Geocode\Exception\GeocodeViolationsException* is trigger when you set a wrong data on some builder.
+For example, if you not set `lat` key on `bounds` in `\Puwnz\GoogleMapsLib\Geocode\QueryBuilder\AddressQueryBuilder`  
 
 ## Contribute
 
