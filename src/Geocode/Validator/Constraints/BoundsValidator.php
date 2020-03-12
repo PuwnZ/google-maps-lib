@@ -18,7 +18,7 @@ class BoundsValidator extends ConstraintValidator
         }
 
         if (\is_array($value) === false) {
-            throw new UnexpectedValueException('', 'array');
+            throw new UnexpectedValueException($value, 'array');
         }
 
         $this->eligibleData($value, $constraint);

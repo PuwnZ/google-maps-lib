@@ -52,6 +52,7 @@ Bounds key "southwest" are not valid.');
 
         $this->service->setAddress('10 rue de la Paix, Paris')
             ->setComponents($components)
+            ->setLanguage('fr')
             ->setBounds([
                 'northeast' => [
                     'lat' => 0.0,
@@ -69,6 +70,7 @@ Bounds key "southwest" are not valid.');
             'address' => '10 rue de la Paix, Paris',
             'components' => 'country:FR',
             'bounds' => '0,1|-0,-1',
+            'language' => 'fr',
         ];
 
         static::assertEquals($expected, $actual);

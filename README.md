@@ -32,6 +32,7 @@ $addressBuilder = new AddressQueryBuilder(Validation::createValidator());
 
 $addressBuilder->setAddress('10 rue de la Paix, Paris')
     ->setComponents($components)
+    ->setLanguage('fr')
     ->setBounds([
         'northeast' => [
             'lat' => 0.0,
@@ -48,6 +49,12 @@ $response = $geocode->getGeocodeByBuilder($addressBuilder);
 The first parameter of factory is required, but the path file for a log and http-version are not.
 
 > `http-version` should be a float.
+
+## Language supported
+
+Google does not accept all language for their apis. You can found all language supported [here](https://developers.google.com/maps/faq#languagesupport)
+
+> If you don't set the language, google can return partial geocoding response for example.
 
 ## Testing
 
