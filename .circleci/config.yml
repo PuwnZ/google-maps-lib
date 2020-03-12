@@ -6,6 +6,9 @@ orbs:
 x-common: &x-common-php
   docker:
     - image: docker.pkg.github.com/puwnz/google-maps-lib/php-7.3-intl:latest
+      auth:
+        username: GuigZ-
+        password: $GITHUB_TOKEN
       environment:
         APP_ENV: test
   working_directory: /var/www/app
