@@ -7,8 +7,6 @@ namespace Puwnz\GoogleMapsLib\Tests\Geocode\Validator\Constraints;
 use Puwnz\GoogleMapsLib\Geocode\Validator\Constraints\Bounds;
 use Puwnz\GoogleMapsLib\Geocode\Validator\Constraints\Language;
 use Puwnz\GoogleMapsLib\Geocode\Validator\Constraints\LanguageValidator;
-use Puwnz\GoogleMapsLib\Geocode\Validator\Constraints\QueryComponents;
-use Puwnz\GoogleMapsLib\Geocode\Validator\Constraints\QueryComponentsValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Exception\UnexpectedValueException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;

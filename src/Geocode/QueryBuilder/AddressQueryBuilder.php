@@ -116,12 +116,12 @@ class AddressQueryBuilder implements QueryBuilderInterface
         return $this;
     }
 
-    public function getLanguage(): ?string
+    public function getLanguage() : ?string
     {
         return $this->language;
     }
 
-    public function setLanguage(string $language): AddressQueryBuilder
+    public function setLanguage(string $language) : AddressQueryBuilder
     {
         $violations = $this->validator->validate($language, [
             new Language(),
@@ -134,5 +134,5 @@ class AddressQueryBuilder implements QueryBuilderInterface
         $this->language = $language;
 
         return $this;
-}
+    }
 }
