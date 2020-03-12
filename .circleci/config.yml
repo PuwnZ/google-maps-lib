@@ -8,6 +8,7 @@ x-common: &x-common-php
     - image: php:7.3.2-fpm-alpine3.8
       environment:
         APP_ENV: test
+      command: ['apk add --update icu-dev', 'docker-php-ext-configure intl','docker-php-ext-install intl']
   working_directory: /var/www/app
 
 jobs:
