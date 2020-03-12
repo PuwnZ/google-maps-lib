@@ -6,6 +6,7 @@ namespace Puwnz\GoogleMapsLib\Geocode\QueryBuilder;
 
 use Puwnz\GoogleMapsLib\Geocode\Exception\GeocodeViolationsException;
 use Puwnz\GoogleMapsLib\Geocode\Validator\Constraints\Bounds;
+use Puwnz\GoogleMapsLib\Geocode\Validator\Constraints\Language;
 use Puwnz\GoogleMapsLib\Geocode\Validator\Constraints\QueryComponents;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -22,6 +23,9 @@ class AddressQueryBuilder implements QueryBuilderInterface
 
     /** @var array */
     private $bounds;
+
+    /** @var string */
+    private $language;
 
     public function __construct(ValidatorInterface $validator)
     {
@@ -55,6 +59,7 @@ class AddressQueryBuilder implements QueryBuilderInterface
         return [
             'address' => $this->getAddress(),
             'components' => $this->buildQueryComponents(),
+            'language' => $this->getLanguage(),
             'bounds' => $this->buildBounds(),
         ];
     }
@@ -107,6 +112,26 @@ class AddressQueryBuilder implements QueryBuilderInterface
         }
 
         $this->bounds = $bounds;
+
+        return $this;
+    }
+
+    public function getLanguage() : ?string
+    {
+        return $this->language;
+    }
+
+    public function setLanguage(string $language) : AddressQueryBuilder
+    {
+        $violations = $this->validator->validate($language, [
+            new Language(),
+        ]);
+
+        if ($violations->count()) {
+            throw new GeocodeViolationsException($violations);
+        }
+
+        $this->language = $language;
 
         return $this;
     }
