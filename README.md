@@ -17,6 +17,7 @@ composer require puwnz/google-maps-lib
 ```php
 <?php
 
+use Puwnz\GoogleMapsLib\Constants\SupportedLanguage;
 use Puwnz\GoogleMapsLib\Geocode\GeocodeFactory;
 use Puwnz\GoogleMapsLib\Geocode\QueryBuilder\AddressQueryBuilder;
 use Puwnz\GoogleMapsLib\Geocode\Type\GeocodeComponentQueryType;
@@ -32,7 +33,7 @@ $addressBuilder = new AddressQueryBuilder(Validation::createValidator());
 
 $addressBuilder->setAddress('10 rue de la Paix, Paris')
     ->setComponents($components)
-    ->setLanguage('fr')
+    ->setLanguage(SupportedLanguage::FRENCH)
     ->setBounds([
         'northeast' => [
             'lat' => 0.0,

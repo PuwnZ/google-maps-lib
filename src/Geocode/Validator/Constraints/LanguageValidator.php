@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Puwnz\GoogleMapsLib\Geocode\Validator\Constraints;
 
+use Puwnz\GoogleMapsLib\Constants\SupportedLanguage;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -105,7 +106,7 @@ class LanguageValidator extends ConstraintValidator
             throw new UnexpectedValueException($value, 'string');
         }
 
-        if (!\in_array($value, self::SUPPORTED_LANGUAGES, true)) {
+        if (!\in_array($value, SupportedLanguage::ALL, true)) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ key }}', $value)
                 ->addViolation();

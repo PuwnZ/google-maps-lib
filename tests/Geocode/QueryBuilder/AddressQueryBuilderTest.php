@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Puwnz\GoogleMapsLib\Tests\Geocode\QueryBuilder;
 
 use PHPUnit\Framework\TestCase;
+use Puwnz\GoogleMapsLib\Constants\SupportedLanguage;
 use Puwnz\GoogleMapsLib\Geocode\Exception\GeocodeViolationsException;
 use Puwnz\GoogleMapsLib\Geocode\QueryBuilder\AddressQueryBuilder;
 use Puwnz\GoogleMapsLib\Geocode\Type\GeocodeComponentQueryType;
@@ -52,7 +53,7 @@ Bounds key "southwest" are not valid.');
 
         $this->service->setAddress('10 rue de la Paix, Paris')
             ->setComponents($components)
-            ->setLanguage('fr')
+            ->setLanguage(SupportedLanguage::FRENCH)
             ->setBounds([
                 'northeast' => [
                     'lat' => 0.0,
