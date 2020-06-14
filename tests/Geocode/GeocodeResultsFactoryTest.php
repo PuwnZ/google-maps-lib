@@ -36,11 +36,13 @@ class GeocodeResultsFactoryTest extends TestCase
             "status" => "REQUEST_DENIED",
         ];
         $expected = [];
-        $actual = $this->service->create($response);
 
         $this->logger->expects($this->once())
             ->method('error')
             ->with($response['status'], [$response['error_message']]);
+
+        $actual = $this->service->create($response);
+
         TestCase::assertSame($expected, $actual);
     }
 
