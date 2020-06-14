@@ -29,8 +29,8 @@ class GeocodeResultsFactory
     {
         $results = [];
 
-        if ($this->checkResponseIsError($response) === null || empty($response['results'])) {
-            return $results;
+        if (empty($response['results'])) {
+            return $this->checkResponseIsError($response);
         }
 
         foreach ($response['results'] as $address) {
@@ -91,13 +91,12 @@ class GeocodeResultsFactory
         return $geocodeGeometry;
     }
 
-    private function checkResponseIsError(array $response): ?array
+    private function checkResponseIsError(array $response): array
     {
         if (array_key_exists('status', $response) && array_key_exists('error_message', $response)) {
             $this->logger->error($response['status'], [$response['error_message']]);
-            return null;
         }
 
-        return $response;
+        return [];
     }
 }
