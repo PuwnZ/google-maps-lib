@@ -17,22 +17,56 @@ composer require puwnz/google-maps-lib
 ```php
 <?php
 
+use Puwnz\GoogleMapsLib\Constants\SupportedLanguage;
 use Puwnz\GoogleMapsLib\Geocode\GeocodeFactory;
+use Puwnz\GoogleMapsLib\Geocode\QueryBuilder\AddressQueryBuilder;
 use Puwnz\GoogleMapsLib\Geocode\Type\GeocodeComponentQueryType;
+use Symfony\Component\Validator\Validation;
 
-
-$geocode = GeocodeFactory::create('google-api-key');
+$geocode = GeocodeFactory::create('google-api-key', 'path/log/file', 'http-version');
 
 $components = [
     GeocodeComponentQueryType::COUNTRY => 'FR'
 ];
 
-$response = $geocode->getGeocodeResults('10 rue de la Paix, Paris', $components);
+$addressBuilder = new AddressQueryBuilder(Validation::createValidator());
+
+$addressBuilder->setAddress('10 rue de la Paix, Paris')
+    ->setComponents($components)
+    ->setLanguage(SupportedLanguage::FRENCH)
+    ->setBounds([
+        'northeast' => [
+            'lat' => 0.0,
+            'lng' => 1.0
+        ],
+        'southwest' => [
+            'lat' => -0.0,
+            'lng' => -1.0
+        ]
+    ]);
+
+$response = $geocode->getGeocodeByBuilder($addressBuilder);
 ```
+The first parameter of factory is required, but the path file for a log and http-version are not.
+
+> `http-version` should be a float.
+
+## Language supported
+
+Google does not accept all language for their apis. You can found all language supported [here](https://developers.google.com/maps/faq#languagesupport)
+
+> If you don't set the language, google can return partial geocoding response for example.
 
 ## Testing
 
 The bundle is fully unit tested by [PHPUnit](http://www.phpunit.de/) with a code coverage close to **100%**.
+
+## Exception
+
+Some exceptions are trigger in this lib, the next list explain in few words why :
+
+- *\Puwnz\GoogleMapsLib\Geocode\Exception\GeocodeViolationsException* is trigger when you set a wrong data on some builder.
+For example, if you not set `lat` key on `bounds` in `\Puwnz\GoogleMapsLib\Geocode\QueryBuilder\AddressQueryBuilder`  
 
 ## Contribute
 

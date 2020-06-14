@@ -7,6 +7,8 @@ namespace Puwnz\GoogleMapsLib\Tests\Geocode\Geocode;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Puwnz\GoogleMapsLib\Geocode\GeocodeClient;
+use Puwnz\GoogleMapsLib\Geocode\QueryBuilder\QueryBuilderInterface;
+use Puwnz\GoogleMapsLib\Geocode\Type\GeocodeComponentQueryType;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
@@ -39,7 +41,7 @@ class GeocodeClientTest extends TestCase
     {
         $address = 'mocked-address';
         $queryComponents = [
-            'mocked-component' => 'mocked-value',
+            GeocodeComponentQueryType::COUNTRY => 'mocked-value',
         ];
 
         $this->client->expects($this->once())
@@ -48,7 +50,7 @@ class GeocodeClientTest extends TestCase
 
         $this->logger->expects($this->once())
             ->method('error')
-            ->with('mocked-exception', ['address' => $address, 'components' => 'mocked-component:mocked-value']);
+            ->with('mocked-exception', ['address' => $address, 'components' => GeocodeComponentQueryType::COUNTRY . ':mocked-value']);
 
         $this->service->getGeocode($address, $queryComponents);
     }
@@ -57,7 +59,7 @@ class GeocodeClientTest extends TestCase
     {
         $address = 'mocked-address';
         $queryComponents = [
-            'mocked-component' => 'mocked-value',
+            GeocodeComponentQueryType::COUNTRY => 'mocked-value',
         ];
 
         $response = $this->createMock(ResponseInterface::class);
@@ -71,7 +73,7 @@ class GeocodeClientTest extends TestCase
                     'query' => [
                         'address' => $address,
                         'key' => $this->googleApiKey,
-                        'components' => 'mocked-component:mocked-value',
+                        'components' => GeocodeComponentQueryType::COUNTRY . ':mocked-value',
                     ],
                 ]
             )
@@ -82,6 +84,70 @@ class GeocodeClientTest extends TestCase
             ->willReturn(['mocked-response']);
 
         $actual = $this->service->getGeocode($address, $queryComponents);
+
+        TestCase::assertSame(['mocked-response'], $actual);
+    }
+
+    public function testGetGeocodeByBuilderThrowable() : void
+    {
+        $query = [
+            'address' => 'mocked-address',
+            'components' => GeocodeComponentQueryType::COUNTRY . ':mocked-value',
+        ];
+
+        $queryBuilder = $this->createMock(QueryBuilderInterface::class);
+
+        $queryBuilder->expects($this->once())
+            ->method('getQuery')
+            ->willReturn($query);
+
+        $this->client->expects($this->once())
+            ->method('request')
+            ->willThrowException(new \Exception('mocked-error'));
+
+        $this->logger->expects($this->once())
+            ->method('error')
+            ->with('mocked-error', $query);
+
+        $actual = $this->service->getGeocodeWithBuilder($queryBuilder);
+
+        static::assertEquals([], $actual);
+    }
+
+    public function testGetGeocodeByBuilder() : void
+    {
+        $query = [
+            'address' => 'mocked-address',
+            'components' => GeocodeComponentQueryType::COUNTRY . ':mocked-value',
+        ];
+
+        $queryBuilder = $this->createMock(QueryBuilderInterface::class);
+        $response = $this->createMock(ResponseInterface::class);
+
+        $queryBuilder->expects($this->once())
+            ->method('getQuery')
+            ->willReturn($query);
+
+        $this->client->expects($this->once())
+            ->method('request')
+            ->with(
+                'GET',
+                'https://maps.googleapis.com/maps/api/geocode/json',
+                [
+                    'query' => [
+                        'address' => 'mocked-address',
+                        'key' => $this->googleApiKey,
+                        'components' => GeocodeComponentQueryType::COUNTRY . ':mocked-value',
+                    ],
+                ]
+            )
+            ->willReturn($response);
+
+        $response->expects($this->once())
+            ->method('toArray')
+            ->willReturn(['mocked-response']);
+
+        $actual = $this->service->getGeocodeWithBuilder($queryBuilder);
 
         TestCase::assertSame(['mocked-response'], $actual);
     }
