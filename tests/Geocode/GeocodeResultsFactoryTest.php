@@ -28,12 +28,12 @@ class GeocodeResultsFactoryTest extends TestCase
         $this->service = new GeocodeResultsFactory($this->logger);
     }
 
-    public function testGoogleSendError(): void
+    public function testGoogleSendError() : void
     {
         $response = [
-            "error_message" => "This API project is not authorized to use this API.",
-            "results" => [],
-            "status" => "REQUEST_DENIED",
+            'error_message' => 'This API project is not authorized to use this API.',
+            'results' => [],
+            'status' => 'REQUEST_DENIED',
         ];
         $expected = [];
 

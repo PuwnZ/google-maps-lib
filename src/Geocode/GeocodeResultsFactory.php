@@ -22,14 +22,13 @@ class GeocodeResultsFactory
     }
 
     /**
-     * @param array $response
      * @return GeocodeResult[]
      */
     public function create(array $response) : array
     {
         $results = [];
 
-        if (empty($response['results'])) {
+        if ($response['results'] === []) {
             return $this->checkResponseIsError($response);
         }
 
@@ -91,9 +90,9 @@ class GeocodeResultsFactory
         return $geocodeGeometry;
     }
 
-    private function checkResponseIsError(array $response): array
+    private function checkResponseIsError(array $response) : array
     {
-        if (array_key_exists('status', $response) && array_key_exists('error_message', $response)) {
+        if (\array_key_exists('status', $response) && \array_key_exists('error_message', $response)) {
             $this->logger->error($response['status'], [$response['error_message']]);
         }
 
