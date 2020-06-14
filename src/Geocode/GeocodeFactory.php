@@ -17,7 +17,8 @@ class GeocodeFactory
         $logger->pushHandler(new StreamHandler($logFilePath, Logger::DEBUG));
 
         $geocodeClient = new GeocodeClient($client, $logger, $googleApiKey);
+        $geocodeResults = new GeocodeResultsFactory($logger);
 
-        return new GeocodeParser($geocodeClient, new GeocodeResultsFactory());
+        return new GeocodeParser($geocodeClient, $geocodeResults);
     }
 }
