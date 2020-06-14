@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Puwnz\GoogleMapsLib\Tests\Geocode\Geocode;
 
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 use Puwnz\GoogleMapsLib\Geocode\DTO\GeocodeAddressComponent;
 use Puwnz\GoogleMapsLib\Geocode\DTO\GeocodeGeometry;
 use Puwnz\GoogleMapsLib\Geocode\DTO\GeocodeResult;
@@ -16,11 +17,33 @@ class GeocodeResultsFactoryTest extends TestCase
     /** @var GeocodeResultsFactory */
     private $service;
 
+    /** @var \PHPUnit\Framework\MockObject\MockObject|LoggerInterface */
+    private $logger;
+
     protected function setUp() : void
     {
         parent::setUp();
 
-        $this->service = new GeocodeResultsFactory();
+        $this->logger = $this->createMock(LoggerInterface::class);
+        $this->service = new GeocodeResultsFactory($this->logger);
+    }
+
+    public function testGoogleSendError() : void
+    {
+        $response = [
+            'error_message' => 'This API project is not authorized to use this API.',
+            'results' => [],
+            'status' => 'REQUEST_DENIED',
+        ];
+        $expected = [];
+
+        $this->logger->expects($this->once())
+            ->method('error')
+            ->with($response['status'], [$response['error_message']]);
+
+        $actual = $this->service->create($response);
+
+        TestCase::assertSame($expected, $actual);
     }
 
     public function testTransformWithoutResults() : void
