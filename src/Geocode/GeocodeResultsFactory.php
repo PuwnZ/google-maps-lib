@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Puwnz\GoogleMapsLib\Geocode;
 
+use Psr\Log\LoggerInterface;
 use Puwnz\GoogleMapsLib\Geocode\DTO\GeocodeAddressComponent;
 use Puwnz\GoogleMapsLib\Geocode\DTO\GeocodeGeometry;
 use Puwnz\GoogleMapsLib\Geocode\DTO\GeocodeResult;
@@ -12,6 +13,14 @@ use Puwnz\GoogleMapsLib\Geocode\Type\GeocodeAddressComponentType;
 
 class GeocodeResultsFactory
 {
+    /** @var LoggerInterface */
+    private $logger;
+
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
+
     /**
      * @return GeocodeResult[]
      */
@@ -19,8 +28,8 @@ class GeocodeResultsFactory
     {
         $results = [];
 
-        if (empty($response['results'])) {
-            return $results;
+        if ($response['results'] === []) {
+            return $this->checkResponseIsError($response);
         }
 
         foreach ($response['results'] as $address) {
@@ -79,5 +88,14 @@ class GeocodeResultsFactory
         $geocodeGeometry->setLocation($location);
 
         return $geocodeGeometry;
+    }
+
+    private function checkResponseIsError(array $response) : array
+    {
+        if (\array_key_exists('status', $response) && \array_key_exists('error_message', $response)) {
+            $this->logger->error($response['status'], [$response['error_message']]);
+        }
+
+        return [];
     }
 }
