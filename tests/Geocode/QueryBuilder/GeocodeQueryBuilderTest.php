@@ -6,21 +6,22 @@ namespace Puwnz\GoogleMapsLib\Tests\Geocode\QueryBuilder;
 
 use PHPUnit\Framework\TestCase;
 use Puwnz\GoogleMapsLib\Constants\SupportedLanguage;
+use Puwnz\GoogleMapsLib\Constants\SupportedRegion;
 use Puwnz\GoogleMapsLib\Geocode\Exception\GeocodeViolationsException;
-use Puwnz\GoogleMapsLib\Geocode\QueryBuilder\AddressQueryBuilder;
+use Puwnz\GoogleMapsLib\Geocode\QueryBuilder\GeocodeQueryBuilder;
 use Puwnz\GoogleMapsLib\Geocode\Type\GeocodeComponentQueryType;
 use Symfony\Component\Validator\Validation;
 
-class AddressQueryBuilderTest extends TestCase
+class GeocodeQueryBuilderTest extends TestCase
 {
-    /** @var AddressQueryBuilder */
+    /** @var GeocodeQueryBuilder */
     private $service;
 
     protected function setUp() : void
     {
         parent::setUp();
 
-        $this->service = new AddressQueryBuilder(Validation::createValidator());
+        $this->service = new GeocodeQueryBuilder(Validation::createValidator());
     }
 
     public function testSetBoundsThrowable() : void
@@ -45,6 +46,22 @@ Bounds key "southwest" are not valid.');
         ]);
     }
 
+    public function testSetLanguageThrowable() : void
+    {
+        $this->expectException(GeocodeViolationsException::class);
+        $this->expectExceptionMessage('Language "mock-language" is not supported.');
+
+        $this->service->setLanguage('mock-language');
+    }
+
+    public function testSetRegionThrowable() : void
+    {
+        $this->expectException(GeocodeViolationsException::class);
+        $this->expectExceptionMessage('Region "mock-region" is not supported.');
+
+        $this->service->setLanguage('mock-region');
+    }
+
     public function testGetQuery() : void
     {
         $components = [
@@ -54,6 +71,7 @@ Bounds key "southwest" are not valid.');
         $this->service->setAddress('10 rue de la Paix, Paris')
             ->setComponents($components)
             ->setLanguage(SupportedLanguage::FRENCH)
+            ->setRegion(SupportedRegion::CA)
             ->setBounds([
                 'northeast' => [
                     'lat' => 0.0,
@@ -72,6 +90,7 @@ Bounds key "southwest" are not valid.');
             'components' => 'country:FR',
             'bounds' => '0,1|-0,-1',
             'language' => 'fr',
+            'region' => 'ca',
         ];
 
         static::assertEquals($expected, $actual);
