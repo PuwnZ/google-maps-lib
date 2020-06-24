@@ -59,7 +59,7 @@ Bounds key "southwest" are not valid.');
         $this->expectException(GeocodeViolationsException::class);
         $this->expectExceptionMessage('Region "mock-region" is not supported.');
 
-        $this->service->setLanguage('mock-region');
+        $this->service->setRegion('mock-region');
     }
 
     public function testGetQuery() : void
