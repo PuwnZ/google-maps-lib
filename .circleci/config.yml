@@ -6,9 +6,6 @@ orbs:
 x-common: &x-common-php
   docker:
     - image: puwnz/php-intl:7.3-alpine
-      auth:
-        username: $CIRCLE_USERNAME
-        password: $GITHUB_TOKEN
       environment:
         APP_ENV: test
   working_directory: /var/www/app
