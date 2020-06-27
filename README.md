@@ -30,9 +30,9 @@ $components = [
     GeocodeComponentQueryType::COUNTRY => 'FR'
 ];
 
-$addressBuilder = new GeocodeQueryBuilder(Validation::createValidator());
+$geocodeQueryBuilder = new GeocodeQueryBuilder(Validation::createValidator());
 
-$addressBuilder->setAddress('10 rue de la Paix, Paris')
+$geocodeQueryBuilder->setAddress('10 rue de la Paix, Paris')
     ->setComponents($components)
     ->setLanguage(SupportedLanguage::FRENCH)
     ->setRegion(SupportedRegion::FR)
@@ -47,7 +47,7 @@ $addressBuilder->setAddress('10 rue de la Paix, Paris')
         ]
     ]);
 
-$response = $geocode->getGeocodeByBuilder($addressBuilder);
+$response = $geocode->getGeocodeByBuilder($geocodeQueryBuilder);
 ```
 The first parameter of factory is required, but the path file for a log and http-version are not.
 

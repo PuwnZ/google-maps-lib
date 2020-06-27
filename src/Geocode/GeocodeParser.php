@@ -27,12 +27,12 @@ class GeocodeParser
      */
     public function getGeocodeResults(string $address, array $queryComponents = []) : array
     {
-        $addressQuery = new GeocodeQueryBuilder(Validation::createValidator());
+        $geocodeQueryBuilder = new GeocodeQueryBuilder(Validation::createValidator());
 
-        $addressQuery->setAddress($address)
+        $geocodeQueryBuilder->setAddress($address)
             ->setComponents($queryComponents);
 
-        return $this->getGeocodeByBuilder($addressQuery);
+        return $this->getGeocodeByBuilder($geocodeQueryBuilder);
     }
 
     public function getGeocodeByBuilder(QueryBuilderInterface $queryBuilder) : array
