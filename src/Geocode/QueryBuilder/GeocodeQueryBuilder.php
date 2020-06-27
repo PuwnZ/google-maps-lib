@@ -8,9 +8,10 @@ use Puwnz\GoogleMapsLib\Geocode\Exception\GeocodeViolationsException;
 use Puwnz\GoogleMapsLib\Geocode\Validator\Constraints\Bounds;
 use Puwnz\GoogleMapsLib\Geocode\Validator\Constraints\Language;
 use Puwnz\GoogleMapsLib\Geocode\Validator\Constraints\QueryComponents;
+use Puwnz\GoogleMapsLib\Geocode\Validator\Constraints\Region;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class AddressQueryBuilder implements QueryBuilderInterface
+class GeocodeQueryBuilder implements QueryBuilderInterface
 {
     /** @var string */
     private $address;
@@ -26,6 +27,9 @@ class AddressQueryBuilder implements QueryBuilderInterface
 
     /** @var string */
     private $language;
+
+    /** @var string */
+    private $region;
 
     public function __construct(ValidatorInterface $validator)
     {
@@ -61,6 +65,7 @@ class AddressQueryBuilder implements QueryBuilderInterface
             'components' => $this->buildQueryComponents(),
             'language' => $this->getLanguage(),
             'bounds' => $this->buildBounds(),
+            'region' => $this->getRegion(),
         ];
     }
 
@@ -81,7 +86,7 @@ class AddressQueryBuilder implements QueryBuilderInterface
         return $this->components;
     }
 
-    public function setComponents(array $components) : AddressQueryBuilder
+    public function setComponents(array $components) : GeocodeQueryBuilder
     {
         $violations = $this->validator->validate($components, [
             new QueryComponents(),
@@ -101,7 +106,7 @@ class AddressQueryBuilder implements QueryBuilderInterface
         return $this->bounds;
     }
 
-    public function setBounds(array $bounds) : AddressQueryBuilder
+    public function setBounds(array $bounds) : GeocodeQueryBuilder
     {
         $violations = $this->validator->validate($bounds, [
             new Bounds(),
@@ -121,7 +126,7 @@ class AddressQueryBuilder implements QueryBuilderInterface
         return $this->language;
     }
 
-    public function setLanguage(string $language) : AddressQueryBuilder
+    public function setLanguage(string $language) : GeocodeQueryBuilder
     {
         $violations = $this->validator->validate($language, [
             new Language(),
@@ -134,5 +139,25 @@ class AddressQueryBuilder implements QueryBuilderInterface
         $this->language = $language;
 
         return $this;
+    }
+
+    public function setRegion(string $region) : GeocodeQueryBuilder
+    {
+        $violations = $this->validator->validate($region, [
+            new Region(),
+        ]);
+
+        if ($violations->count()) {
+            throw new GeocodeViolationsException($violations);
+        }
+
+        $this->region = $region;
+
+        return $this;
+    }
+
+    public function getRegion() : ?string
+    {
+        return $this->region;
     }
 }

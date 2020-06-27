@@ -18,8 +18,9 @@ composer require puwnz/google-maps-lib
 <?php
 
 use Puwnz\GoogleMapsLib\Constants\SupportedLanguage;
+use Puwnz\GoogleMapsLib\Constants\SupportedRegion;
 use Puwnz\GoogleMapsLib\Geocode\GeocodeFactory;
-use Puwnz\GoogleMapsLib\Geocode\QueryBuilder\AddressQueryBuilder;
+use Puwnz\GoogleMapsLib\Geocode\QueryBuilder\GeocodeQueryBuilder;
 use Puwnz\GoogleMapsLib\Geocode\Type\GeocodeComponentQueryType;
 use Symfony\Component\Validator\Validation;
 
@@ -29,11 +30,12 @@ $components = [
     GeocodeComponentQueryType::COUNTRY => 'FR'
 ];
 
-$addressBuilder = new AddressQueryBuilder(Validation::createValidator());
+$geocodeQueryBuilder = new GeocodeQueryBuilder(Validation::createValidator());
 
-$addressBuilder->setAddress('10 rue de la Paix, Paris')
+$geocodeQueryBuilder->setAddress('10 rue de la Paix, Paris')
     ->setComponents($components)
     ->setLanguage(SupportedLanguage::FRENCH)
+    ->setRegion(SupportedRegion::FR)
     ->setBounds([
         'northeast' => [
             'lat' => 0.0,
@@ -45,7 +47,7 @@ $addressBuilder->setAddress('10 rue de la Paix, Paris')
         ]
     ]);
 
-$response = $geocode->getGeocodeByBuilder($addressBuilder);
+$response = $geocode->getGeocodeByBuilder($geocodeQueryBuilder);
 ```
 The first parameter of factory is required, but the path file for a log and http-version are not.
 
