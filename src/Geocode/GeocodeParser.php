@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Puwnz\GoogleMapsLib\Geocode;
 
-use Puwnz\GoogleMapsLib\Geocode\QueryBuilder\AddressQueryBuilder;
+use Puwnz\GoogleMapsLib\Geocode\QueryBuilder\GeocodeQueryBuilder;
 use Puwnz\GoogleMapsLib\Geocode\QueryBuilder\QueryBuilderInterface;
 use Symfony\Component\Validator\Validation;
 
@@ -23,16 +23,16 @@ class GeocodeParser
     }
 
     /**
-     * @deprecated this method is deprecated and will be removed in puwnz/google-maps-lib 1.0, use \Puwnz\GoogleMapsLib\Geocode\GeocodeParser::getGeocodeByAddress instead
+     * @deprecated this method is deprecated and will be removed in puwnz/google-maps-lib 1.0, use \Puwnz\GoogleMapsLib\Geocode\GeocodeParser::getGeocodeByBuilder instead
      */
     public function getGeocodeResults(string $address, array $queryComponents = []) : array
     {
-        $addressQuery = new AddressQueryBuilder(Validation::createValidator());
+        $geocodeQueryBuilder = new GeocodeQueryBuilder(Validation::createValidator());
 
-        $addressQuery->setAddress($address)
+        $geocodeQueryBuilder->setAddress($address)
             ->setComponents($queryComponents);
 
-        return $this->getGeocodeByBuilder($addressQuery);
+        return $this->getGeocodeByBuilder($geocodeQueryBuilder);
     }
 
     public function getGeocodeByBuilder(QueryBuilderInterface $queryBuilder) : array

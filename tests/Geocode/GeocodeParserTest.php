@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Puwnz\GoogleMapsLib\Geocode\GeocodeClient;
 use Puwnz\GoogleMapsLib\Geocode\GeocodeParser;
 use Puwnz\GoogleMapsLib\Geocode\GeocodeResultsFactory;
-use Puwnz\GoogleMapsLib\Geocode\QueryBuilder\AddressQueryBuilder;
+use Puwnz\GoogleMapsLib\Geocode\QueryBuilder\GeocodeQueryBuilder;
 use Puwnz\GoogleMapsLib\Geocode\Type\GeocodeComponentQueryType;
 use Puwnz\GoogleMapsLib\Geocode\Validator\Constraints\Bounds;
 use Puwnz\GoogleMapsLib\Geocode\Validator\Constraints\QueryComponents;
@@ -48,7 +48,7 @@ class GeocodeParserTest extends TestCase
 
         $this->geocodeClient->expects($this->once())
             ->method('getGeocodeWithBuilder')
-            ->with($this->isInstanceOf(AddressQueryBuilder::class))
+            ->with($this->isInstanceOf(GeocodeQueryBuilder::class))
             ->willReturn($response);
 
         $this->geocodeResultsFactory->expects($this->once())
@@ -83,7 +83,7 @@ class GeocodeParserTest extends TestCase
         ];
 
         $validator = $this->createMock(ValidatorInterface::class);
-        $queryBuilder = new AddressQueryBuilder($validator);
+        $queryBuilder = new GeocodeQueryBuilder($validator);
 
         $violations = $this->createMock(ConstraintViolationListInterface::class);
 
