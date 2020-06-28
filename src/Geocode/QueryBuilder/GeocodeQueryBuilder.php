@@ -17,13 +17,13 @@ class GeocodeQueryBuilder implements QueryBuilderInterface
     private $address;
 
     /** @var array */
-    private $components;
+    private $components = [];
 
     /** @var ValidatorInterface */
     private $validator;
 
     /** @var array */
-    private $bounds;
+    private $bounds = [];
 
     /** @var string */
     private $language;
@@ -74,7 +74,7 @@ class GeocodeQueryBuilder implements QueryBuilderInterface
         return $this->address;
     }
 
-    public function setAddress(string $address) : self
+    public function setAddress(string $address) : GeocodeQueryBuilder
     {
         $this->address = $address;
 
