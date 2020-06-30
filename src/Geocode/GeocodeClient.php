@@ -92,14 +92,14 @@ class GeocodeClient
                 ]
             );
 
-            $cacheKey = \json_encode($queries);
+            $cacheKey = \md5(\json_encode($queries));
 
             $item = $this->cache->getItem($cacheKey);
 
             if ($item->isHit()) {
                 $this->logger->debug(
                     'Get map\'s result from cache',
-                    $cacheKey
+                    ['cacheKey' => $cacheKey]
                 );
 
                 return \json_decode($item->get(), true);
@@ -116,6 +116,7 @@ class GeocodeClient
             $arrayResponse = $response->toArray();
 
             $item->set(\json_encode($arrayResponse));
+            $this->cache->save($item);
 
             return $arrayResponse;
         } catch (\Throwable $e) {
