@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Puwnz\GoogleMapsLib\Geocode;
 
+use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
-use Puwnz\GoogleMapsLib\Geocode\Exception\GeocodeComponentQueryException;
 use Puwnz\GoogleMapsLib\Geocode\QueryBuilder\QueryBuilderInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -20,17 +20,21 @@ class GeocodeClient
     /** @var LoggerInterface */
     private $logger;
 
-    public function __construct(HttpClientInterface $client, LoggerInterface $logger, string $googleApiKey)
+    /** @var CacheItemPoolInterface */
+    private $cache;
+
+    public function __construct(HttpClientInterface $client, LoggerInterface $logger, CacheItemPoolInterface $cache, string $googleApiKey)
     {
         $this->client = $client;
         $this->googleApiKey = $googleApiKey;
+        $this->cache = $cache;
         $this->logger = $logger;
     }
 
     /**
-     * @deprecated this method is deprecated and will be removed in puwnz/google-maps-lib 1.0, use \Puwnz\GoogleMapsLib\Geocode\GeocodeClient::getGeocodeWithBuilder instead
-     *
      * @throws GeocodeComponentQueryException
+     *
+     * @deprecated this method is deprecated and will be removed in puwnz/google-maps-lib 1.0, use \Puwnz\GoogleMapsLib\Geocode\GeocodeClient::getGeocodeWithBuilder instead
      */
     public function getGeocode(string $address, array $queryComponents) : array
     {
@@ -61,9 +65,9 @@ class GeocodeClient
     }
 
     /**
-     * @deprecated this method is deprecated and will be removed in puwnz/google-maps-lib 1.0
-     *
      * @throws GeocodeComponentQueryException
+     *
+     * @deprecated this method is deprecated and will be removed in puwnz/google-maps-lib 1.0
      */
     private function buildQueryComponents(array $queryComponents) : string
     {
@@ -81,20 +85,39 @@ class GeocodeClient
         $query = $queryBuilder->getQuery();
 
         try {
+            $queries = \array_merge(
+                $query,
+                [
+                    'key' => $this->googleApiKey,
+                ]
+            );
+
+            $cacheKey = \json_encode($queries);
+
+            $item = $this->cache->getItem($cacheKey);
+
+            if ($item->isHit()) {
+                $this->logger->debug(
+                    'Get map\'s result from cache',
+                    $cacheKey
+                );
+
+                return \json_decode($item->get(), true);
+            }
+
             $response = $this->client->request(
                 'GET',
                 'https://maps.googleapis.com/maps/api/geocode/json',
                 [
-                    'query' => \array_merge(
-                        $query,
-                        [
-                            'key' => $this->googleApiKey,
-                        ]
-                    ),
+                    'query' => $queries,
                 ]
             );
 
-            return $response->toArray();
+            $arrayResponse = $response->toArray();
+
+            $item->set(\json_encode($arrayResponse));
+
+            return $arrayResponse;
         } catch (\Throwable $e) {
             $this->logger->error(
                 $e->getMessage(),
