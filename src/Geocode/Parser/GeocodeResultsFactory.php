@@ -2,25 +2,34 @@
 
 declare(strict_types=1);
 
-namespace Puwnz\GoogleMapsLib\Geocode;
+namespace Puwnz\GoogleMapsLib\Geocode\Parser;
 
+use Psr\Log\LoggerInterface;
 use Puwnz\GoogleMapsLib\Geocode\DTO\GeocodeAddressComponent;
 use Puwnz\GoogleMapsLib\Geocode\DTO\GeocodeGeometry;
 use Puwnz\GoogleMapsLib\Geocode\DTO\GeocodeResult;
 use Puwnz\GoogleMapsLib\Geocode\DTO\Geometry\GeometryLocation;
 use Puwnz\GoogleMapsLib\Geocode\Type\GeocodeAddressComponentType;
 
-class GeocodeTransformer
+class GeocodeResultsFactory
 {
+    /** @var LoggerInterface */
+    private $logger;
+
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
+
     /**
      * @return GeocodeResult[]
      */
-    public function transform(array $response) : array
+    public function create(array $response) : array
     {
         $results = [];
 
-        if (empty($response['results'])) {
-            return $results;
+        if ($response['results'] === []) {
+            return $this->checkResponseIsError($response);
         }
 
         foreach ($response['results'] as $address) {
@@ -79,5 +88,14 @@ class GeocodeTransformer
         $geocodeGeometry->setLocation($location);
 
         return $geocodeGeometry;
+    }
+
+    private function checkResponseIsError(array $response) : array
+    {
+        if (\array_key_exists('status', $response) && \array_key_exists('error_message', $response)) {
+            $this->logger->error($response['status'], [$response['error_message']]);
+        }
+
+        return [];
     }
 }

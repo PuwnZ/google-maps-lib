@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Puwnz\GoogleMapsLib\Geocode\QueryBuilder;
 
+use Puwnz\GoogleMapsLib\Common\QueryBuilder\QueryBuilderInterface as QueryBuilderInterfaceCommon;
 use Puwnz\GoogleMapsLib\Geocode\Exception\GeocodeViolationsException;
 use Puwnz\GoogleMapsLib\Geocode\Validator\Constraints\Bounds;
 use Puwnz\GoogleMapsLib\Geocode\Validator\Constraints\Language;
@@ -11,7 +12,7 @@ use Puwnz\GoogleMapsLib\Geocode\Validator\Constraints\QueryComponents;
 use Puwnz\GoogleMapsLib\Geocode\Validator\Constraints\Region;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class GeocodeQueryBuilder implements QueryBuilderInterface
+class GeocodeQueryBuilder implements QueryBuilderInterfaceCommon
 {
     /** @var string */
     private $address;

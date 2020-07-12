@@ -19,12 +19,11 @@ composer require puwnz/google-maps-lib
 
 use Puwnz\GoogleMapsLib\Constants\SupportedLanguage;
 use Puwnz\GoogleMapsLib\Constants\SupportedRegion;
-use Puwnz\GoogleMapsLib\Geocode\GeocodeFactory;
 use Puwnz\GoogleMapsLib\Geocode\QueryBuilder\GeocodeQueryBuilder;
 use Puwnz\GoogleMapsLib\Geocode\Type\GeocodeComponentQueryType;
-use Symfony\Component\Validator\Validation;
+use Puwnz\GoogleMapsLib\GoogleServiceFactory;use Symfony\Component\Validator\Validation;
 
-$geocode = GeocodeFactory::create('google-api-key', 'path/log/file', 'http-version');
+$geocode = GoogleServiceFactory::create('google-api-key', 'path/log/file', 'http-version');
 
 $components = [
     GeocodeComponentQueryType::COUNTRY => 'FR'
