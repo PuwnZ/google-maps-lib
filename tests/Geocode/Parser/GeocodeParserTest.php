@@ -19,7 +19,7 @@ class GeocodeParserTest extends TestCase
     /** @var GeocodeParser */
     private $service;
 
-    protected function setUp(): void
+    protected function setUp() : void
     {
         parent::setUp();
 

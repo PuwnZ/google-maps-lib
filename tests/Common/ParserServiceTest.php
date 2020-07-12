@@ -7,9 +7,9 @@ namespace Puwnz\GoogleMapsLib\Tests\Common;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Puwnz\GoogleMapsLib\Common\Client\ClientInterface;
+use Puwnz\GoogleMapsLib\Common\Exception\ParserException;
 use Puwnz\GoogleMapsLib\Common\Parser\ParserInterface;
 use Puwnz\GoogleMapsLib\Common\ParserService;
-use Puwnz\GoogleMapsLib\Common\Exception\ParserException;
 use Puwnz\GoogleMapsLib\Common\QueryBuilder\QueryBuilderInterface;
 
 class ParserServiceTest extends TestCase
