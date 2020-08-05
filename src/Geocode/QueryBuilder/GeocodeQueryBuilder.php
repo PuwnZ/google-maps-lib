@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Puwnz\GoogleMapsLib\Geocode\QueryBuilder;
 
+use Puwnz\GoogleMapsLib\Common\QueryBuilder\QueryBuilderInterface;
 use Puwnz\GoogleMapsLib\Geocode\Exception\GeocodeViolationsException;
 use Puwnz\GoogleMapsLib\Geocode\Validator\Constraints\Bounds;
 use Puwnz\GoogleMapsLib\Geocode\Validator\Constraints\Language;

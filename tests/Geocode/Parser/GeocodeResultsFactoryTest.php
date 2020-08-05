@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Puwnz\GoogleMapsLib\Tests\Geocode\Geocode;
+namespace Puwnz\GoogleMapsLib\Tests\Geocode\Parser;
 
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
@@ -10,7 +10,7 @@ use Puwnz\GoogleMapsLib\Geocode\DTO\GeocodeAddressComponent;
 use Puwnz\GoogleMapsLib\Geocode\DTO\GeocodeGeometry;
 use Puwnz\GoogleMapsLib\Geocode\DTO\GeocodeResult;
 use Puwnz\GoogleMapsLib\Geocode\DTO\Geometry\GeometryLocation;
-use Puwnz\GoogleMapsLib\Geocode\GeocodeResultsFactory;
+use Puwnz\GoogleMapsLib\Geocode\Parser\GeocodeResultsFactory;
 
 class GeocodeResultsFactoryTest extends TestCase
 {

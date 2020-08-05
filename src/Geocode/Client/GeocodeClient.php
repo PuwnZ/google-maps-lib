@@ -2,14 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Puwnz\GoogleMapsLib\Geocode;
+namespace Puwnz\GoogleMapsLib\Geocode\Client;
 
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
-use Puwnz\GoogleMapsLib\Geocode\QueryBuilder\QueryBuilderInterface;
+use Puwnz\GoogleMapsLib\Common\Client\ClientInterface;
+use Puwnz\GoogleMapsLib\Common\QueryBuilder\QueryBuilderInterface;
+use Puwnz\GoogleMapsLib\Geocode\QueryBuilder\GeocodeQueryBuilder;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class GeocodeClient
+class GeocodeClient implements ClientInterface
 {
     /** @var HttpClientInterface */
     private $client;
@@ -31,56 +33,7 @@ class GeocodeClient
         $this->logger = $logger;
     }
 
-    /**
-     * @throws GeocodeComponentQueryException
-     *
-     * @deprecated this method is deprecated and will be removed in puwnz/google-maps-lib 1.0, use \Puwnz\GoogleMapsLib\Geocode\GeocodeClient::getGeocodeWithBuilder instead
-     */
-    public function getGeocode(string $address, array $queryComponents) : array
-    {
-        $components = $this->buildQueryComponents($queryComponents);
-
-        try {
-            $response = $this->client->request(
-                'GET',
-                'https://maps.googleapis.com/maps/api/geocode/json',
-                [
-                    'query' => [
-                        'address' => $address,
-                        'key' => $this->googleApiKey,
-                        'components' => $components,
-                    ],
-                ]
-            );
-
-            return $response->toArray();
-        } catch (\Throwable $e) {
-            $this->logger->error(
-                $e->getMessage(),
-                ['address' => $address, 'components' => $components]
-            );
-
-            return [];
-        }
-    }
-
-    /**
-     * @throws GeocodeComponentQueryException
-     *
-     * @deprecated this method is deprecated and will be removed in puwnz/google-maps-lib 1.0
-     */
-    private function buildQueryComponents(array $queryComponents) : string
-    {
-        $components = [];
-
-        foreach ($queryComponents as $keyComponent => $valueComponent) {
-            $components[] = \sprintf('%s:%s', $keyComponent, $valueComponent);
-        }
-
-        return \implode('|', $components);
-    }
-
-    public function getGeocodeWithBuilder(QueryBuilderInterface $queryBuilder) : array
+    public function call(QueryBuilderInterface $queryBuilder) : array
     {
         $query = $queryBuilder->getQuery();
 
@@ -127,5 +80,10 @@ class GeocodeClient
 
             return [];
         }
+    }
+
+    public function supports(QueryBuilderInterface $queryBuilder) : bool
+    {
+        return $queryBuilder instanceof GeocodeQueryBuilder;
     }
 }

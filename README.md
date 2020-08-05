@@ -19,12 +19,12 @@ composer require puwnz/google-maps-lib
 
 use Puwnz\GoogleMapsLib\Constants\SupportedLanguage;
 use Puwnz\GoogleMapsLib\Constants\SupportedRegion;
-use Puwnz\GoogleMapsLib\Geocode\GeocodeFactory;
 use Puwnz\GoogleMapsLib\Geocode\QueryBuilder\GeocodeQueryBuilder;
 use Puwnz\GoogleMapsLib\Geocode\Type\GeocodeComponentQueryType;
+use Puwnz\GoogleMapsLib\GoogleServiceFactory;
 use Symfony\Component\Validator\Validation;
 
-$geocode = GeocodeFactory::create('google-api-key', 'path/log/file', 'http-version');
+$geocode = GoogleServiceFactory::create('google-api-key', 'path/log/file', 'http-version');
 
 $components = [
     GeocodeComponentQueryType::COUNTRY => 'FR'
@@ -47,7 +47,7 @@ $geocodeQueryBuilder->setAddress('10 rue de la Paix, Paris')
         ]
     ]);
 
-$response = $geocode->getGeocodeByBuilder($geocodeQueryBuilder);
+$response = $geocode->apply($geocodeQueryBuilder);
 ```
 The first parameter of factory is required, but the path file for a log and http-version are not.
 
