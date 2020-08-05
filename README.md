@@ -21,7 +21,8 @@ use Puwnz\GoogleMapsLib\Constants\SupportedLanguage;
 use Puwnz\GoogleMapsLib\Constants\SupportedRegion;
 use Puwnz\GoogleMapsLib\Geocode\QueryBuilder\GeocodeQueryBuilder;
 use Puwnz\GoogleMapsLib\Geocode\Type\GeocodeComponentQueryType;
-use Puwnz\GoogleMapsLib\GoogleServiceFactory;use Symfony\Component\Validator\Validation;
+use Puwnz\GoogleMapsLib\GoogleServiceFactory;
+use Symfony\Component\Validator\Validation;
 
 $geocode = GoogleServiceFactory::create('google-api-key', 'path/log/file', 'http-version');
 
