@@ -46,7 +46,7 @@ $geocodeQueryBuilder->setAddress('10 rue de la Paix, Paris')
         ]
     ]);
 
-$response = $geocode->getGeocodeByBuilder($geocodeQueryBuilder);
+$response = $geocode->apply($geocodeQueryBuilder);
 ```
 The first parameter of factory is required, but the path file for a log and http-version are not.
 
