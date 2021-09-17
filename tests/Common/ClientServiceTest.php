@@ -26,7 +26,7 @@ class ClientServiceTest extends TestCase
     /** @var ClientService */
     private $service;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -40,40 +40,40 @@ class ClientServiceTest extends TestCase
         ], $this->parserService);
     }
 
-    public function testCall() : void
+    public function testCall(): void
     {
         $queryBuilder = $this->createMock(QueryBuilderInterface::class);
 
-        $this->clientUnsupported->expects(static::once())
+        $this->clientUnsupported->expects(self::once())
             ->method('supports')
             ->with($queryBuilder)
             ->willReturn(false);
 
-        $this->clientSupported->expects(static::once())
+        $this->clientSupported->expects(self::once())
             ->method('supports')
             ->with($queryBuilder)
             ->willReturn(true);
 
-        $this->parserService->expects(static::once())
+        $this->parserService->expects(self::once())
             ->method('parse')
             ->with($queryBuilder, $this->clientSupported)
             ->willReturn(['mocked']);
 
         $actual = $this->service->call($queryBuilder);
 
-        static::assertSame(['mocked'], $actual);
+        self::assertSame(['mocked'], $actual);
     }
 
-    public function testCallThrow() : void
+    public function testCallThrow(): void
     {
         $queryBuilder = $this->createMock(QueryBuilderInterface::class);
 
-        $this->clientUnsupported->expects(static::once())
+        $this->clientUnsupported->expects(self::once())
             ->method('supports')
             ->with($queryBuilder)
             ->willReturn(false);
 
-        $this->clientSupported->expects(static::once())
+        $this->clientSupported->expects(self::once())
             ->method('supports')
             ->with($queryBuilder)
             ->willReturn(false);

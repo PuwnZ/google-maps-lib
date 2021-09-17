@@ -9,5 +9,5 @@ interface QueryBuilderInterface
     /**
      * Create http-client query.
      */
-    public function getQuery() : array;
+    public function getQuery(): array;
 }

@@ -19,7 +19,7 @@ class ParserService
         $this->parsers = $parsers;
     }
 
-    public function parse(QueryBuilderInterface $queryBuilder, ClientInterface $client) : array
+    public function parse(QueryBuilderInterface $queryBuilder, ClientInterface $client): array
     {
         foreach ($this->parsers as $parser) {
             if ($parser->supports($queryBuilder)) {
@@ -27,6 +27,6 @@ class ParserService
             }
         }
 
-        throw new ParserException(\sprintf('Parser for "%s" does not exists', \get_class($queryBuilder)));
+        throw new ParserException(sprintf('Parser for "%s" does not exists', \get_class($queryBuilder)));
     }
 }

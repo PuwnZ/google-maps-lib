@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 class QueryComponentsValidatorTest extends ConstraintValidatorTestCase
 {
-    public function testValidateNotGoodConstraint() : void
+    public function testValidateNotGoodConstraint(): void
     {
         $this->expectException(UnexpectedTypeException::class);
         $this->expectExceptionMessage('Expected argument of type "Puwnz\GoogleMapsLib\Geocode\Validator\Constraints\QueryComponents", "Puwnz\GoogleMapsLib\Geocode\Validator\Constraints\Bounds" given');
@@ -23,7 +23,7 @@ class QueryComponentsValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate([], $constraint);
     }
 
-    public function testValidateNotArray() : void
+    public function testValidateNotArray(): void
     {
         $this->expectException(UnexpectedValueException::class);
         $this->expectExceptionMessage('Expected argument of type "array", "string" given');
@@ -33,7 +33,7 @@ class QueryComponentsValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate('', $constraint);
     }
 
-    public function testConstraint() : void
+    public function testConstraint(): void
     {
         $constraint = new QueryComponents();
 
@@ -46,7 +46,7 @@ class QueryComponentsValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    protected function createValidator() : QueryComponentsValidator
+    protected function createValidator(): QueryComponentsValidator
     {
         return new QueryComponentsValidator();
     }

@@ -18,12 +18,12 @@ class GeocodeParser implements ParserInterface
         $this->geocodeResultsFactory = $geocodeResultsFactory;
     }
 
-    public function parse(array $response) : array
+    public function parse(array $response): array
     {
         return $this->geocodeResultsFactory->create($response);
     }
 
-    public function supports(QueryBuilderInterface $queryBuilder) : bool
+    public function supports(QueryBuilderInterface $queryBuilder): bool
     {
         return $queryBuilder instanceof GeocodeQueryBuilder;
     }

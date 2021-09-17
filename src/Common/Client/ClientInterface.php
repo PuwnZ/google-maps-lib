@@ -9,5 +9,5 @@ use Puwnz\GoogleMapsLib\Common\QueryBuilder\SupportQueryBuilderInterface;
 
 interface ClientInterface extends SupportQueryBuilderInterface
 {
-    public function call(QueryBuilderInterface $queryBuilder) : array;
+    public function call(QueryBuilderInterface $queryBuilder): array;
 }

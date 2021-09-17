@@ -22,7 +22,7 @@ class GoogleServiceTest extends TestCase
     /** @var GoogleService */
     private $service;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -32,29 +32,29 @@ class GoogleServiceTest extends TestCase
         $this->service = new GoogleService($this->clientService, $this->logger);
     }
 
-    public function testApply() : void
+    public function testApply(): void
     {
         $queryBuilder = $this->createMock(QueryBuilderInterface::class);
 
-        $this->clientService->expects(static::once())
+        $this->clientService->expects(self::once())
             ->method('call')
             ->with($queryBuilder)
             ->willReturn(['mocked']);
 
         $actual = $this->service->apply($queryBuilder);
 
-        static::assertSame(['mocked'], $actual);
+        self::assertSame(['mocked'], $actual);
     }
 
-    public function testApplyThrow() : void
+    public function testApplyThrow(): void
     {
         $queryBuilder = $this->createMock(QueryBuilderInterface::class);
 
-        $this->clientService->expects(static::once())
+        $this->clientService->expects(self::once())
             ->method('call')
             ->willThrowException(new \Exception('mocked exception'));
 
-        $this->logger->expects(static::once())
+        $this->logger->expects(self::once())
             ->method('error')
             ->with('mocked exception', ['query_builder' => \get_class($queryBuilder)]);
 

@@ -33,19 +33,19 @@ class GeocodeClient implements ClientInterface
         $this->logger = $logger;
     }
 
-    public function call(QueryBuilderInterface $queryBuilder) : array
+    public function call(QueryBuilderInterface $queryBuilder): array
     {
         $query = $queryBuilder->getQuery();
 
         try {
-            $queries = \array_merge(
+            $queries = array_merge(
                 $query,
                 [
                     'key' => $this->googleApiKey,
                 ]
             );
 
-            $cacheKey = \md5(\json_encode($queries));
+            $cacheKey = md5(json_encode($queries));
 
             $item = $this->cache->getItem($cacheKey);
 
@@ -55,7 +55,7 @@ class GeocodeClient implements ClientInterface
                     ['cacheKey' => $cacheKey]
                 );
 
-                return \json_decode($item->get(), true);
+                return json_decode($item->get(), true);
             }
 
             $response = $this->client->request(
@@ -68,7 +68,7 @@ class GeocodeClient implements ClientInterface
 
             $arrayResponse = $response->toArray();
 
-            $item->set(\json_encode($arrayResponse));
+            $item->set(json_encode($arrayResponse));
             $this->cache->save($item);
 
             return $arrayResponse;
@@ -82,7 +82,7 @@ class GeocodeClient implements ClientInterface
         }
     }
 
-    public function supports(QueryBuilderInterface $queryBuilder) : bool
+    public function supports(QueryBuilderInterface $queryBuilder): bool
     {
         return $queryBuilder instanceof GeocodeQueryBuilder;
     }

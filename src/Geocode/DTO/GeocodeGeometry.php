@@ -11,14 +11,14 @@ class GeocodeGeometry
     /** @var GeometryLocation */
     private $location;
 
-    public function setLocation(GeometryLocation $location) : self
+    public function setLocation(GeometryLocation $location): self
     {
         $this->location = $location;
 
         return $this;
     }
 
-    public function getLocation() : GeometryLocation
+    public function getLocation(): GeometryLocation
     {
         return $this->location;
     }

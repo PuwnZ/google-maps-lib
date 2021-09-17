@@ -12,24 +12,24 @@ class GeometryLocation
     /** @var float */
     private $lng;
 
-    public function getLatitude() : float
+    public function getLatitude(): float
     {
         return $this->lat;
     }
 
-    public function setLatitude(float $lat) : self
+    public function setLatitude(float $lat): self
     {
         $this->lat = $lat;
 
         return $this;
     }
 
-    public function getLongitude() : float
+    public function getLongitude(): float
     {
         return $this->lng;
     }
 
-    public function setLongitude(float $lng) : self
+    public function setLongitude(float $lng): self
     {
         $this->lng = $lng;
 
