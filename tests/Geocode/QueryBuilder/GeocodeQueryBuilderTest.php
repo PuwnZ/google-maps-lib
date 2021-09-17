@@ -17,14 +17,14 @@ class GeocodeQueryBuilderTest extends TestCase
     /** @var GeocodeQueryBuilder */
     private $service;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->service = new GeocodeQueryBuilder(Validation::createValidator());
     }
 
-    public function testSetBoundsThrowable() : void
+    public function testSetBoundsThrowable(): void
     {
         $this->expectException(GeocodeViolationsException::class);
         $this->expectExceptionMessage('Bounds key "northeast" are not valid.
@@ -36,7 +36,7 @@ Bounds key "southwest" are not valid.');
         ]);
     }
 
-    public function testSetComponentsThrowable() : void
+    public function testSetComponentsThrowable(): void
     {
         $this->expectException(GeocodeViolationsException::class);
         $this->expectExceptionMessage('Query components key "mock-components" not exists.');
@@ -46,7 +46,7 @@ Bounds key "southwest" are not valid.');
         ]);
     }
 
-    public function testSetLanguageThrowable() : void
+    public function testSetLanguageThrowable(): void
     {
         $this->expectException(GeocodeViolationsException::class);
         $this->expectExceptionMessage('Language "mock-language" is not supported.');
@@ -54,7 +54,7 @@ Bounds key "southwest" are not valid.');
         $this->service->setLanguage('mock-language');
     }
 
-    public function testSetRegionThrowable() : void
+    public function testSetRegionThrowable(): void
     {
         $this->expectException(GeocodeViolationsException::class);
         $this->expectExceptionMessage('Region "mock-region" is not supported.');
@@ -62,7 +62,7 @@ Bounds key "southwest" are not valid.');
         $this->service->setRegion('mock-region');
     }
 
-    public function testGetQuery() : void
+    public function testGetQuery(): void
     {
         $components = [
             GeocodeComponentQueryType::COUNTRY => 'FR',
@@ -93,6 +93,6 @@ Bounds key "southwest" are not valid.');
             'region' => 'ca',
         ];
 
-        static::assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 }

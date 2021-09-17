@@ -9,7 +9,7 @@ use Puwnz\GoogleMapsLib\Geocode\DTO\GeocodeAddressComponent;
 
 class GeocodeAddressComponentTest extends TestCase
 {
-    public function testTypes() : void
+    public function testTypes(): void
     {
         $geocodeAddressComponent = new GeocodeAddressComponent();
 
@@ -25,7 +25,7 @@ class GeocodeAddressComponentTest extends TestCase
         TestCase::assertEquals($types, $geocodeAddressComponent->getTypes());
     }
 
-    public function testLongName() : void
+    public function testLongName(): void
     {
         $geocodeAddressComponent = new GeocodeAddressComponent();
 
@@ -36,7 +36,7 @@ class GeocodeAddressComponentTest extends TestCase
         TestCase::assertEquals($longName, $geocodeAddressComponent->getLongName());
     }
 
-    public function testShotName() : void
+    public function testShotName(): void
     {
         $geocodeAddressComponent = new GeocodeAddressComponent();
 

@@ -26,7 +26,7 @@ class ParserServiceTest extends TestCase
     /** @var ParserService */
     private $service;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -39,47 +39,47 @@ class ParserServiceTest extends TestCase
         ]);
     }
 
-    public function testParse() : void
+    public function testParse(): void
     {
         $queryBuilder = $this->createMock(QueryBuilderInterface::class);
         $client = $this->createMock(ClientInterface::class);
 
-        $this->parserUnsupported->expects(static::once())
+        $this->parserUnsupported->expects(self::once())
             ->method('supports')
             ->with($queryBuilder)
             ->willReturn(false);
 
-        $this->parserSupported->expects(static::once())
+        $this->parserSupported->expects(self::once())
             ->method('supports')
             ->with($queryBuilder)
             ->willReturn(true);
 
-        $client->expects(static::once())
+        $client->expects(self::once())
             ->method('call')
             ->with($queryBuilder)
             ->willReturn(['mocked']);
 
-        $this->parserSupported->expects(static::once())
+        $this->parserSupported->expects(self::once())
             ->method('parse')
             ->with(['mocked'])
             ->willReturn(['mocked']);
 
         $actual = $this->service->parse($queryBuilder, $client);
 
-        static::assertSame(['mocked'], $actual);
+        self::assertSame(['mocked'], $actual);
     }
 
-    public function testParseThrow() : void
+    public function testParseThrow(): void
     {
         $queryBuilder = $this->createMock(QueryBuilderInterface::class);
         $client = $this->createMock(ClientInterface::class);
 
-        $this->parserUnsupported->expects(static::once())
+        $this->parserUnsupported->expects(self::once())
             ->method('supports')
             ->with($queryBuilder)
             ->willReturn(false);
 
-        $this->parserSupported->expects(static::once())
+        $this->parserSupported->expects(self::once())
             ->method('supports')
             ->with($queryBuilder)
             ->willReturn(false);

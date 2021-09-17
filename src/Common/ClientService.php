@@ -22,7 +22,7 @@ class ClientService
         $this->parserService = $parserService;
     }
 
-    public function call(QueryBuilderInterface $queryBuilder) : array
+    public function call(QueryBuilderInterface $queryBuilder): array
     {
         foreach ($this->clients as $client) {
             if ($client->supports($queryBuilder)) {
@@ -30,6 +30,6 @@ class ClientService
             }
         }
 
-        throw new ClientException(\sprintf('Client for "%s" does not exists', \get_class($queryBuilder)));
+        throw new ClientException(sprintf('Client for "%s" does not exists', \get_class($queryBuilder)));
     }
 }

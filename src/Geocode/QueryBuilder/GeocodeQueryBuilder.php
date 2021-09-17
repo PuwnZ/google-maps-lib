@@ -37,29 +37,29 @@ class GeocodeQueryBuilder implements QueryBuilderInterface
         $this->validator = $validator;
     }
 
-    private function buildQueryComponents() : string
+    private function buildQueryComponents(): string
     {
         $components = [];
 
         foreach ($this->getComponents() as $keyComponent => $valueComponent) {
-            $components[] = \sprintf('%s:%s', $keyComponent, $valueComponent);
+            $components[] = sprintf('%s:%s', $keyComponent, $valueComponent);
         }
 
-        return \implode('|', $components);
+        return implode('|', $components);
     }
 
-    private function buildBounds() : string
+    private function buildBounds(): string
     {
         $bounds = [];
 
         foreach ($this->getBounds() as $bound) {
-            $bounds[] = \implode(',', $bound);
+            $bounds[] = implode(',', $bound);
         }
 
-        return \implode('|', $bounds);
+        return implode('|', $bounds);
     }
 
-    public function getQuery() : array
+    public function getQuery(): array
     {
         return [
             'address' => $this->getAddress(),
@@ -70,24 +70,24 @@ class GeocodeQueryBuilder implements QueryBuilderInterface
         ];
     }
 
-    private function getAddress() : string
+    private function getAddress(): string
     {
         return $this->address;
     }
 
-    public function setAddress(string $address) : GeocodeQueryBuilder
+    public function setAddress(string $address): GeocodeQueryBuilder
     {
         $this->address = $address;
 
         return $this;
     }
 
-    private function getComponents() : array
+    private function getComponents(): array
     {
         return $this->components;
     }
 
-    public function setComponents(array $components) : GeocodeQueryBuilder
+    public function setComponents(array $components): GeocodeQueryBuilder
     {
         $violations = $this->validator->validate($components, [
             new QueryComponents(),
@@ -102,12 +102,12 @@ class GeocodeQueryBuilder implements QueryBuilderInterface
         return $this;
     }
 
-    private function getBounds() : array
+    private function getBounds(): array
     {
         return $this->bounds;
     }
 
-    public function setBounds(array $bounds) : GeocodeQueryBuilder
+    public function setBounds(array $bounds): GeocodeQueryBuilder
     {
         $violations = $this->validator->validate($bounds, [
             new Bounds(),
@@ -122,12 +122,12 @@ class GeocodeQueryBuilder implements QueryBuilderInterface
         return $this;
     }
 
-    public function getLanguage() : ?string
+    public function getLanguage(): ?string
     {
         return $this->language;
     }
 
-    public function setLanguage(string $language) : GeocodeQueryBuilder
+    public function setLanguage(string $language): GeocodeQueryBuilder
     {
         $violations = $this->validator->validate($language, [
             new Language(),
@@ -142,7 +142,7 @@ class GeocodeQueryBuilder implements QueryBuilderInterface
         return $this;
     }
 
-    public function setRegion(string $region) : GeocodeQueryBuilder
+    public function setRegion(string $region): GeocodeQueryBuilder
     {
         $violations = $this->validator->validate($region, [
             new Region(),
@@ -157,7 +157,7 @@ class GeocodeQueryBuilder implements QueryBuilderInterface
         return $this;
     }
 
-    public function getRegion() : ?string
+    public function getRegion(): ?string
     {
         return $this->region;
     }

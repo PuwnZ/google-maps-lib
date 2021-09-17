@@ -24,7 +24,7 @@ class GeocodeResultsFactory
     /**
      * @return GeocodeResult[]
      */
-    public function create(array $response) : array
+    public function create(array $response): array
     {
         $results = [];
 
@@ -39,7 +39,7 @@ class GeocodeResultsFactory
         return $results;
     }
 
-    private function buildGeocodeResult(array $address) : ?GeocodeResult
+    private function buildGeocodeResult(array $address): ?GeocodeResult
     {
         return (new GeocodeResult())
             ->setGeocodeAddressComponent(...$this->setGeocodeAddressComponent($address['address_components']))
@@ -50,14 +50,14 @@ class GeocodeResultsFactory
             ->setTypes(...$address['types']);
     }
 
-    private function setGeocodeAddressComponent(array $addressComponents) : array
+    private function setGeocodeAddressComponent(array $addressComponents): array
     {
-        $components = \array_map([$this, 'createAddressComponent'], $addressComponents);
+        $components = array_map([$this, 'createAddressComponent'], $addressComponents);
 
-        return \array_filter($components, function (?GeocodeAddressComponent $component) { return $component !== null; });
+        return array_filter($components, function (?GeocodeAddressComponent $component) { return $component !== null; });
     }
 
-    private function createAddressComponent(array $addressComponent) : GeocodeAddressComponent
+    private function createAddressComponent(array $addressComponent): GeocodeAddressComponent
     {
         $geocodeAddressComponent = null;
 
@@ -77,7 +77,7 @@ class GeocodeResultsFactory
         return $geocodeAddressComponent;
     }
 
-    private function createGeometry(array $geometry) : GeocodeGeometry
+    private function createGeometry(array $geometry): GeocodeGeometry
     {
         $geocodeGeometry = new GeocodeGeometry();
 
@@ -90,7 +90,7 @@ class GeocodeResultsFactory
         return $geocodeGeometry;
     }
 
-    private function checkResponseIsError(array $response) : array
+    private function checkResponseIsError(array $response): array
     {
         if (\array_key_exists('status', $response) && \array_key_exists('error_message', $response)) {
             $this->logger->error($response['status'], [$response['error_message']]);

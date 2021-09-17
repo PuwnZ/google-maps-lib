@@ -32,7 +32,7 @@ class GeocodeClientTest extends TestCase
     /** @var GeocodeClient */
     private $service;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -44,7 +44,7 @@ class GeocodeClientTest extends TestCase
         $this->service = new GeocodeClient($this->client, $this->logger, $this->cache, $this->googleApiKey);
     }
 
-    public function testCallThrow() : void
+    public function testCallThrow(): void
     {
         $queryBuilder = $this->createMock(QueryBuilderInterface::class);
 
@@ -55,20 +55,20 @@ class GeocodeClientTest extends TestCase
             'key' => $this->googleApiKey,
         ];
 
-        $cacheKey = \md5(\json_encode($queries));
+        $cacheKey = md5(json_encode($queries));
         $cacheItemValue = '{"value": "mocked-value"}';
 
         $cacheItem = $this->createMock(CacheItemInterface::class);
 
-        $queryBuilder->expects(static::once())
+        $queryBuilder->expects(self::once())
             ->method('getQuery')
             ->willReturn($query);
 
-        $this->cache->expects(static::once())
+        $this->cache->expects(self::once())
             ->method('getItem')
             ->willThrowException(new \Exception('mocked exception'));
 
-        $this->logger->expects(static::once())
+        $this->logger->expects(self::once())
             ->method('error')
             ->with(
                 'mocked exception',
@@ -77,10 +77,10 @@ class GeocodeClientTest extends TestCase
 
         $actual = $this->service->call($queryBuilder);
 
-        static::assertSame([], $actual);
+        self::assertSame([], $actual);
     }
 
-    public function testCallHitted() : void
+    public function testCallHitted(): void
     {
         $queryBuilder = $this->createMock(QueryBuilderInterface::class);
 
@@ -91,41 +91,41 @@ class GeocodeClientTest extends TestCase
             'key' => $this->googleApiKey,
         ];
 
-        $cacheKey = \md5(\json_encode($queries));
+        $cacheKey = md5(json_encode($queries));
         $cacheItemValue = '{"value": "mocked-value"}';
 
         $cacheItem = $this->createMock(CacheItemInterface::class);
 
-        $queryBuilder->expects(static::once())
+        $queryBuilder->expects(self::once())
             ->method('getQuery')
             ->willReturn($query);
 
-        $this->cache->expects(static::once())
+        $this->cache->expects(self::once())
             ->method('getItem')
             ->with($cacheKey)
             ->willReturn($cacheItem);
 
-        $cacheItem->expects(static::once())
+        $cacheItem->expects(self::once())
             ->method('isHit')
             ->willReturn(true);
 
-        $this->logger->expects(static::once())
+        $this->logger->expects(self::once())
             ->method('debug')
             ->with(
                 'Get map\'s result from cache',
                 ['cacheKey' => $cacheKey]
             );
 
-        $cacheItem->expects(static::once())
+        $cacheItem->expects(self::once())
             ->method('get')
             ->willReturn($cacheItemValue);
 
         $actual = $this->service->call($queryBuilder);
 
-        static::assertSame(['value' => 'mocked-value'], $actual);
+        self::assertSame(['value' => 'mocked-value'], $actual);
     }
 
-    public function testCall() : void
+    public function testCall(): void
     {
         $queryBuilder = $this->createMock(QueryBuilderInterface::class);
 
@@ -136,25 +136,25 @@ class GeocodeClientTest extends TestCase
             'key' => $this->googleApiKey,
         ];
 
-        $cacheKey = \md5(\json_encode($queries));
+        $cacheKey = md5(json_encode($queries));
 
         $cacheItem = $this->createMock(CacheItemInterface::class);
         $response = $this->createMock(ResponseInterface::class);
 
-        $queryBuilder->expects(static::once())
+        $queryBuilder->expects(self::once())
             ->method('getQuery')
             ->willReturn($query);
 
-        $this->cache->expects(static::once())
+        $this->cache->expects(self::once())
             ->method('getItem')
             ->with($cacheKey)
             ->willReturn($cacheItem);
 
-        $cacheItem->expects(static::once())
+        $cacheItem->expects(self::once())
             ->method('isHit')
             ->willReturn(false);
 
-        $this->client->expects(static::once())
+        $this->client->expects(self::once())
             ->method('request')
             ->with(
                 'GET',
@@ -165,26 +165,26 @@ class GeocodeClientTest extends TestCase
             )
             ->willReturn($response);
 
-        $response->expects(static::once())
+        $response->expects(self::once())
             ->method('toArray')
             ->willReturn(['value' => 'mocked-value']);
 
-        $cacheItem->expects(static::once())
+        $cacheItem->expects(self::once())
             ->method('set')
             ->with('{"value":"mocked-value"}');
 
-        $this->cache->expects(static::once())
+        $this->cache->expects(self::once())
             ->method('save')
             ->with($cacheItem);
 
         $actual = $this->service->call($queryBuilder);
 
-        static::assertSame(['value' => 'mocked-value'], $actual);
+        self::assertSame(['value' => 'mocked-value'], $actual);
     }
 
-    public function testSupports() : void
+    public function testSupports(): void
     {
-        static::assertFalse($this->service->supports($this->createMock(QueryBuilderInterface::class)));
+        self::assertFalse($this->service->supports($this->createMock(QueryBuilderInterface::class)));
         static::asserttrue($this->service->supports($this->createMock(GeocodeQueryBuilder::class)));
     }
 }

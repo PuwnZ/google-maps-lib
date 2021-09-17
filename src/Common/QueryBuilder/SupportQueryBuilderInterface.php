@@ -6,5 +6,5 @@ namespace Puwnz\GoogleMapsLib\Common\QueryBuilder;
 
 interface SupportQueryBuilderInterface
 {
-    public function supports(QueryBuilderInterface $queryBuilder) : bool;
+    public function supports(QueryBuilderInterface $queryBuilder): bool;
 }

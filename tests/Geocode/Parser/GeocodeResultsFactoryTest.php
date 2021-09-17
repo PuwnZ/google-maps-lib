@@ -20,7 +20,7 @@ class GeocodeResultsFactoryTest extends TestCase
     /** @var \PHPUnit\Framework\MockObject\MockObject|LoggerInterface */
     private $logger;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -28,7 +28,7 @@ class GeocodeResultsFactoryTest extends TestCase
         $this->service = new GeocodeResultsFactory($this->logger);
     }
 
-    public function testGoogleSendError() : void
+    public function testGoogleSendError(): void
     {
         $response = [
             'error_message' => 'This API project is not authorized to use this API.',
@@ -37,7 +37,7 @@ class GeocodeResultsFactoryTest extends TestCase
         ];
         $expected = [];
 
-        $this->logger->expects($this->once())
+        $this->logger->expects(self::once())
             ->method('error')
             ->with($response['status'], [$response['error_message']]);
 
@@ -46,7 +46,7 @@ class GeocodeResultsFactoryTest extends TestCase
         TestCase::assertSame($expected, $actual);
     }
 
-    public function testTransformWithoutResults() : void
+    public function testTransformWithoutResults(): void
     {
         $response = ['results' => []];
         $expected = [];
@@ -56,7 +56,7 @@ class GeocodeResultsFactoryTest extends TestCase
         TestCase::assertSame($expected, $actual);
     }
 
-    public function testTransformWithout() : void
+    public function testTransformWithout(): void
     {
         $response = [
             'results' => [
@@ -92,7 +92,7 @@ class GeocodeResultsFactoryTest extends TestCase
         TestCase::assertEquals($expected, $actual);
     }
 
-    private function createGeocodeResult(array $result) : GeocodeResult
+    private function createGeocodeResult(array $result): GeocodeResult
     {
         $geometry = (new GeocodeGeometry())
             ->setLocation(
@@ -108,14 +108,12 @@ class GeocodeResultsFactoryTest extends TestCase
             ->setShortName($result['address_components'][0]['short_name']),
         ];
 
-        $geocodeResult = (new GeocodeResult())
+        return (new GeocodeResult())
             ->setTypes(...$result['types'])
             ->setPlaceId($result['place_id'])
             ->setFormattedAddress($result['formatted_address'])
             ->setGeometry($geometry)
             ->setPartialMatch(false)
             ->setGeocodeAddressComponent(...$geocodeAddressComponents);
-
-        return $geocodeResult;
     }
 }

@@ -8,5 +8,5 @@ use Puwnz\GoogleMapsLib\Common\QueryBuilder\SupportQueryBuilderInterface;
 
 interface ParserInterface extends SupportQueryBuilderInterface
 {
-    public function parse(array $response) : array;
+    public function parse(array $response): array;
 }
