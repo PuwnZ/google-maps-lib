@@ -12,6 +12,7 @@ use Psr\Log\LoggerInterface;
 use Puwnz\GoogleMapsLib\Common\QueryBuilder\QueryBuilderInterface;
 use Puwnz\GoogleMapsLib\Geocode\Client\GeocodeClient;
 use Puwnz\GoogleMapsLib\Geocode\QueryBuilder\GeocodeQueryBuilder;
+use Symfony\Component\Cache\Adapter\TraceableAdapter;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
@@ -37,7 +38,7 @@ class GeocodeClientTest extends TestCase
         parent::setUp();
 
         $this->client = $this->createMock(HttpClientInterface::class);
-        $this->cache = $this->createMock(CacheInterface::class);
+        $this->cache = $this->createMock(TraceableAdapter::class);
         $this->logger = $this->createMock(LoggerInterface::class);
         $this->googleApiKey = 'google-api-key';
 
