@@ -12,6 +12,7 @@ use Psr\Log\LoggerInterface;
 use Puwnz\GoogleMapsLib\Common\QueryBuilder\QueryBuilderInterface;
 use Puwnz\GoogleMapsLib\Geocode\Client\GeocodeClient;
 use Puwnz\GoogleMapsLib\Geocode\QueryBuilder\GeocodeQueryBuilder;
+use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
