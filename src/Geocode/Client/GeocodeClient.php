@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Puwnz\GoogleMapsLib\Geocode\Client;
 
-use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
 use Puwnz\GoogleMapsLib\Common\Client\ClientInterface;
 use Puwnz\GoogleMapsLib\Common\QueryBuilder\QueryBuilderInterface;
 use Puwnz\GoogleMapsLib\Geocode\QueryBuilder\GeocodeQueryBuilder;
+use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class GeocodeClient implements ClientInterface
@@ -25,11 +25,11 @@ class GeocodeClient implements ClientInterface
     /** @var CacheItemPoolInterface */
     private $cache;
 
-    public function __construct(HttpClientInterface $client, LoggerInterface $logger, CacheItemPoolInterface $cache, string $googleApiKey)
+    public function __construct(HttpClientInterface $client, LoggerInterface $logger, CacheInterface $googleMaps, string $googleApiKey)
     {
         $this->client = $client;
         $this->googleApiKey = $googleApiKey;
-        $this->cache = $cache;
+        $this->cache = $googleMaps;
         $this->logger = $logger;
     }
 
