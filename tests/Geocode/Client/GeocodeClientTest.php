@@ -37,7 +37,7 @@ class GeocodeClientTest extends TestCase
         parent::setUp();
 
         $this->client = $this->createMock(HttpClientInterface::class);
-        $this->cache = $this->createMock(CacheItemPoolInterface::class);
+        $this->cache = $this->createMock(CacheInterface::class);
         $this->logger = $this->createMock(LoggerInterface::class);
         $this->googleApiKey = 'google-api-key';
 
