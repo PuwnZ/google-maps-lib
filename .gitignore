@@ -3,3 +3,4 @@ coverage/
 .php_cs.cache
 composer.lock
 .idea/
+.php-cs-fixer.cache

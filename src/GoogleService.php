@@ -26,7 +26,7 @@ class GoogleService
     /**
      * @param GeocodeQueryBuilder $queryBuilder
      */
-    public function apply(QueryBuilderInterface $queryBuilder) : array
+    public function apply(QueryBuilderInterface $queryBuilder): array
     {
         try {
             return $this->clientService->call($queryBuilder);

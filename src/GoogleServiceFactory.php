@@ -16,7 +16,7 @@ use Symfony\Component\HttpClient\HttpClient;
 
 class GoogleServiceFactory
 {
-    public static function create(string $googleApiKey, string $logFilePath = './var/logs/geocode.log', float $httpVersion = 2.) : GoogleService
+    public static function create(string $googleApiKey, string $logFilePath = './var/logs/geocode.log', float $httpVersion = 2.): GoogleService
     {
         $logger = new Logger('geocode');
         $logger->pushHandler(new StreamHandler($logFilePath, Logger::DEBUG));

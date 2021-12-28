@@ -10,7 +10,7 @@ use Puwnz\GoogleMapsLib\Geocode\DTO\Geometry\GeometryLocation;
 
 class GeocodeGeometryTest extends TestCase
 {
-    public function testLocation() : void
+    public function testLocation(): void
     {
         $geocodeGeometry = new GeocodeGeometry();
 

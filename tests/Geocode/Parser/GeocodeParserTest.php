@@ -19,7 +19,7 @@ class GeocodeParserTest extends TestCase
     /** @var GeocodeParser */
     private $service;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -27,23 +27,23 @@ class GeocodeParserTest extends TestCase
         $this->service = new GeocodeParser($this->geocodeResultsFactory);
     }
 
-    public function testParse() : void
+    public function testParse(): void
     {
         $response = ['response' => 'mocked'];
 
-        $this->geocodeResultsFactory->expects(static::once())
+        $this->geocodeResultsFactory->expects(self::once())
             ->method('create')
             ->with($response)
             ->willReturn($response);
 
         $actual = $this->service->parse($response);
 
-        static::assertSame(['response' => 'mocked'], $actual);
+        self::assertSame(['response' => 'mocked'], $actual);
     }
 
-    public function testSupports() : void
+    public function testSupports(): void
     {
-        static::assertFalse($this->service->supports($this->createMock(QueryBuilderInterface::class)));
-        static::assertTrue($this->service->supports($this->createMock(GeocodeQueryBuilder::class)));
+        self::assertFalse($this->service->supports($this->createMock(QueryBuilderInterface::class)));
+        self::assertTrue($this->service->supports($this->createMock(GeocodeQueryBuilder::class)));
     }
 }

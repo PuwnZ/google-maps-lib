@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Puwnz\GoogleMapsLib\Geocode\Client;
 
-use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
 use Puwnz\GoogleMapsLib\Common\Client\ClientInterface;
 use Puwnz\GoogleMapsLib\Common\QueryBuilder\QueryBuilderInterface;
 use Puwnz\GoogleMapsLib\Geocode\QueryBuilder\GeocodeQueryBuilder;
+use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class GeocodeClient implements ClientInterface
@@ -25,27 +25,27 @@ class GeocodeClient implements ClientInterface
     /** @var CacheItemPoolInterface */
     private $cache;
 
-    public function __construct(HttpClientInterface $client, LoggerInterface $logger, CacheItemPoolInterface $cache, string $googleApiKey)
+    public function __construct(HttpClientInterface $client, LoggerInterface $logger, CacheInterface $googleMaps, string $googleApiKey)
     {
         $this->client = $client;
         $this->googleApiKey = $googleApiKey;
-        $this->cache = $cache;
+        $this->cache = $googleMaps;
         $this->logger = $logger;
     }
 
-    public function call(QueryBuilderInterface $queryBuilder) : array
+    public function call(QueryBuilderInterface $queryBuilder): array
     {
         $query = $queryBuilder->getQuery();
 
         try {
-            $queries = \array_merge(
+            $queries = array_merge(
                 $query,
                 [
                     'key' => $this->googleApiKey,
                 ]
             );
 
-            $cacheKey = \md5(\json_encode($queries));
+            $cacheKey = md5(json_encode($queries));
 
             $item = $this->cache->getItem($cacheKey);
 
@@ -55,7 +55,7 @@ class GeocodeClient implements ClientInterface
                     ['cacheKey' => $cacheKey]
                 );
 
-                return \json_decode($item->get(), true);
+                return json_decode($item->get(), true);
             }
 
             $response = $this->client->request(
@@ -68,7 +68,7 @@ class GeocodeClient implements ClientInterface
 
             $arrayResponse = $response->toArray();
 
-            $item->set(\json_encode($arrayResponse));
+            $item->set(json_encode($arrayResponse));
             $this->cache->save($item);
 
             return $arrayResponse;
@@ -82,7 +82,7 @@ class GeocodeClient implements ClientInterface
         }
     }
 
-    public function supports(QueryBuilderInterface $queryBuilder) : bool
+    public function supports(QueryBuilderInterface $queryBuilder): bool
     {
         return $queryBuilder instanceof GeocodeQueryBuilder;
     }

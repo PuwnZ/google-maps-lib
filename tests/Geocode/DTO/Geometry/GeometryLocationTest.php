@@ -9,7 +9,7 @@ use Puwnz\GoogleMapsLib\Geocode\DTO\Geometry\GeometryLocation;
 
 class GeometryLocationTest extends TestCase
 {
-    public function testLatitude() : void
+    public function testLatitude(): void
     {
         $geometryLocation = new GeometryLocation();
         $value = 0.01;
@@ -18,7 +18,7 @@ class GeometryLocationTest extends TestCase
         TestCase::assertEquals($value, $geometryLocation->getLatitude());
     }
 
-    public function testLongitude() : void
+    public function testLongitude(): void
     {
         $geometryLocation = new GeometryLocation();
         $value = 0.02;

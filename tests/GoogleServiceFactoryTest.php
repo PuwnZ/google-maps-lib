@@ -10,10 +10,10 @@ use Puwnz\GoogleMapsLib\GoogleServiceFactory;
 
 class GoogleServiceFactoryTest extends TestCase
 {
-    public function testCreate() : void
+    public function testCreate(): void
     {
         $actual = GoogleServiceFactory::create('google-api-key', './var/logs/geocode.log', 2.);
 
-        static::assertInstanceOf(GoogleService::class, $actual);
+        self::assertInstanceOf(GoogleService::class, $actual);
     }
 }

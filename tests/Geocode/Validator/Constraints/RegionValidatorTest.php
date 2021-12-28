@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 class RegionValidatorTest extends ConstraintValidatorTestCase
 {
-    public function testValidateNotGoodConstraint() : void
+    public function testValidateNotGoodConstraint(): void
     {
         $this->expectException(UnexpectedTypeException::class);
         $this->expectExceptionMessage('Expected argument of type "Puwnz\GoogleMapsLib\Geocode\Validator\Constraints\Region", "Puwnz\GoogleMapsLib\Geocode\Validator\Constraints\Bounds" given');
@@ -23,7 +23,7 @@ class RegionValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate([], $constraint);
     }
 
-    public function testValidateNotString() : void
+    public function testValidateNotString(): void
     {
         $this->expectException(UnexpectedValueException::class);
         $this->expectExceptionMessage('Expected argument of type "string", "array" given');
@@ -33,7 +33,7 @@ class RegionValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate([], $constraint);
     }
 
-    public function testConstraint() : void
+    public function testConstraint(): void
     {
         $constraint = new Region();
 
@@ -43,7 +43,7 @@ class RegionValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    protected function createValidator() : RegionValidator
+    protected function createValidator(): RegionValidator
     {
         return new RegionValidator();
     }

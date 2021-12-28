@@ -9,7 +9,7 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 class GeocodeViolationsException extends \Exception
 {
-    public function __construct(ConstraintViolationListInterface $constraintViolationList, int $code = 0, \Throwable $previous = null)
+    public function __construct(ConstraintViolationListInterface $constraintViolationList, int $code = 0, ?\Throwable $previous = null)
     {
         $message = '';
 
