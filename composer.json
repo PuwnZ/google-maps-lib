@@ -13,7 +13,7 @@
         "php": "^7.3",
         "ext-intl": "*",
         "ext-json": "*",
-        "monolog/monolog": "^2.0",
+        "monolog/monolog": "^1|^2",
         "symfony/cache": "^4.0|^5.0",
         "symfony/http-client": "^4.0|^5.0",
         "symfony/validator": "^4.0|^5.0"
