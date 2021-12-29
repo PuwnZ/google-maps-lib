@@ -22,7 +22,7 @@ class GeocodeClient implements ClientInterface
     /** @var LoggerInterface */
     private $logger;
 
-    /** @var CacheItemPoolInterface */
+    /** @var CacheInterface */
     private $cache;
 
     public function __construct(HttpClientInterface $client, LoggerInterface $logger, CacheInterface $googleMaps, string $googleApiKey)
