@@ -29,6 +29,7 @@ final class GeocodeAddressComponentType
     public const COMPONENT_AIRPORT = 'airport';
     public const COMPONENT_PARK = 'park';
     public const COMPONENT_POINT_OF_INTEREST = 'point_of_interest';
+    public const TOWN_SQUARE = 'town_square';
 
     public const AVAILABLE_COMPONENTS = [
         self::COMPONENT_STREET_ADDRESS,
@@ -54,5 +55,6 @@ final class GeocodeAddressComponentType
         self::COMPONENT_AIRPORT,
         self::COMPONENT_PARK,
         self::COMPONENT_POINT_OF_INTEREST,
+        self::TOWN_SQUARE,
     ];
 }
