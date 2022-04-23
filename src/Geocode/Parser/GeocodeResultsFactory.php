@@ -74,6 +74,10 @@ class GeocodeResultsFactory
             break;
         }
 
+        if ($geocodeAddressComponent === null) {
+            $this->logger->error('Component not working', ['address_component' => $addressComponent]);
+        }
+
         return $geocodeAddressComponent;
     }
 
