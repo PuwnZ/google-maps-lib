@@ -95,4 +95,35 @@ Bounds key "southwest" are not valid.');
 
         self::assertEquals($expected, $actual);
     }
+
+    public function testGetQueryLatLng(): void
+    {
+        $components = [
+            GeocodeComponentQueryType::COUNTRY => 'FR',
+        ];
+
+        $this->service->setAddress('10 rue de la Paix, Paris')
+            ->setComponents($components)
+            ->setLanguage(SupportedLanguage::FRENCH)
+            ->setRegion(SupportedRegion::CA)
+            ->setBounds([
+                'northeast' => [
+                    'lat' => 0.0,
+                    'lng' => 1.0,
+                ],
+                'southwest' => [
+                    'lat' => -0.0,
+                    'lng' => -1.0,
+                ],
+            ])
+            ->setLatLng(.0, .0);
+
+        $actual = $this->service->getQuery();
+
+        $expected = [
+            'latlng' => '0,0',
+        ];
+
+        self::assertEquals($expected, $actual);
+    }
 }

@@ -32,6 +32,8 @@ class GeocodeQueryBuilder implements QueryBuilderInterface
     /** @var string */
     private $region;
 
+    private $latlng = null;
+
     public function __construct(ValidatorInterface $validator)
     {
         $this->validator = $validator;
@@ -61,6 +63,10 @@ class GeocodeQueryBuilder implements QueryBuilderInterface
 
     public function getQuery(): array
     {
+        if ($latLng = $this->getLatLng()) {
+            return ['latlng' => $latLng];
+        }
+
         return [
             'address' => $this->getAddress(),
             'components' => $this->buildQueryComponents(),
@@ -160,5 +166,17 @@ class GeocodeQueryBuilder implements QueryBuilderInterface
     public function getRegion(): ?string
     {
         return $this->region;
+    }
+
+    public function getLatLng(): ?string
+    {
+        return $this->latlng;
+    }
+
+    public function setLatLng(float $lat, float $lng): GeocodeQueryBuilder
+    {
+        $this->latlng = sprintf('%s,%s', $lat, $lng);
+
+        return $this;
     }
 }
