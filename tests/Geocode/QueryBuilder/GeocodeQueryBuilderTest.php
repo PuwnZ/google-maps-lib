@@ -121,7 +121,7 @@ Bounds key "southwest" are not valid.');
         $actual = $this->service->getQuery();
 
         $expected = [
-            'latlng' => '0,0'
+            'latlng' => '0,0',
         ];
 
         self::assertEquals($expected, $actual);
