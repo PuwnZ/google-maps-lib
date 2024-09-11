@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Puwnz\GoogleMapsLib\Geocode\Client;
 
+use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
 use Puwnz\GoogleMapsLib\Common\Client\ClientInterface;
 use Puwnz\GoogleMapsLib\Common\QueryBuilder\QueryBuilderInterface;
@@ -25,7 +26,7 @@ class GeocodeClient implements ClientInterface
     /** @var CacheInterface */
     private $cache;
 
-    public function __construct(HttpClientInterface $client, LoggerInterface $logger, CacheInterface $googleMaps, string $googleApiKey)
+    public function __construct(HttpClientInterface $client, LoggerInterface $logger, CacheItemPoolInterface $googleMaps, string $googleApiKey)
     {
         $this->client = $client;
         $this->googleApiKey = $googleApiKey;

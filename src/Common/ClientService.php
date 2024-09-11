@@ -30,6 +30,6 @@ class ClientService
             }
         }
 
-        throw new ClientException(sprintf('Client for "%s" does not exists', \get_class($queryBuilder)));
+        throw new ClientException(\sprintf('Client for "%s" does not exists', \get_class($queryBuilder)));
     }
 }
