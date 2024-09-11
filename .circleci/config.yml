@@ -5,7 +5,7 @@ orbs:
 
 x-common: &x-common-php
   docker:
-    - image: php:8.1-fpm-alpine3.20
+    - image: puwnz/php-intl:8.1-alpine
       environment:
         APP_ENV: test
   working_directory: /var/www/app
