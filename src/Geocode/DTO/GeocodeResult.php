@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Puwnz\GoogleMapsLib\Geocode\DTO;
 
+use Webmozart\Assert\Assert;
+
 class GeocodeResult
 {
     /** @var GeocodeAddressComponent[] */
-    private $addressComponents;
+    private $addressComponents = [];
 
     /** @var string */
     private $formattedAddress;
@@ -19,7 +21,7 @@ class GeocodeResult
     private $placeId;
 
     /** @var bool */
-    private $partialMatch;
+    private $partialMatch = false;
 
     /** @var GeocodeGeometry */
     private $geometry;
@@ -48,8 +50,12 @@ class GeocodeResult
         return $this->formattedAddress;
     }
 
-    public function setTypes(string ...$types): self
+    public function setTypes(array $types): self
     {
+        array_map(function ($type): void {
+            Assert::string($type);
+        }, $types);
+
         $this->types = $types;
 
         return $this;
