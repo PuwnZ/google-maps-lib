@@ -10,6 +10,9 @@ use Puwnz\GoogleMapsLib\Geocode\DTO\GeocodeGeometry;
 use Puwnz\GoogleMapsLib\Geocode\DTO\GeocodeResult;
 use Puwnz\GoogleMapsLib\Geocode\DTO\Geometry\GeometryLocation;
 use Puwnz\GoogleMapsLib\Geocode\Type\GeocodeAddressComponentType;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 class GeocodeResultsFactory
 {
@@ -39,22 +42,34 @@ class GeocodeResultsFactory
         return $results;
     }
 
-    private function buildGeocodeResult(array $address): ?GeocodeResult
+    private function buildGeocodeResult(array $address): GeocodeResult
     {
-        return (new GeocodeResult())
-            ->setGeocodeAddressComponent(...$this->setGeocodeAddressComponent($address['address_components']))
-            ->setGeometry($this->createGeometry($address['geometry']))
-            ->setFormattedAddress($address['formatted_address'])
-            ->setPlaceId($address['place_id'])
-            ->setPartialMatch($address['partial_match'] ?? false)
-            ->setTypes(...$address['types']);
+        $serializer = $this->getSerializer();
+
+        $geometry = $this->createGeometry($address['geometry']);
+
+        unset($address['geometry']);
+
+        /** @var GeocodeResult $result */
+        $result = $serializer->deserialize(json_encode($address), GeocodeResult::class, 'json');
+        $result->setGeometry($geometry);
+        $result->setGeocodeAddressComponent(...$this->setGeocodeAddressComponent($address['address_components']));
+
+        return $result;
     }
 
     private function setGeocodeAddressComponent(array $addressComponents): array
     {
         $components = array_map([$this, 'createAddressComponent'], $addressComponents);
 
-        return array_filter($components, function (?GeocodeAddressComponent $component) { return $component !== null; });
+        return array_filter($components, function (GeocodeAddressComponent $component) { return $component !== null; });
+    }
+
+    public function getSerializer(): Serializer
+    {
+        $normalizer = [new ObjectNormalizer()];
+
+        return new Serializer($normalizer, [new JsonEncoder()]);
     }
 
     private function createAddressComponent(array $addressComponent): GeocodeAddressComponent
