@@ -27,6 +27,6 @@ class ParserService
             }
         }
 
-        throw new ParserException(sprintf('Parser for "%s" does not exists', \get_class($queryBuilder)));
+        throw new ParserException(\sprintf('Parser for "%s" does not exists', \get_class($queryBuilder)));
     }
 }
