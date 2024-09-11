@@ -109,7 +109,7 @@ class GeocodeResultsFactoryTest extends TestCase
         ];
 
         return (new GeocodeResult())
-            ->setTypes(...$result['types'])
+            ->setTypes($result['types'])
             ->setPlaceId($result['place_id'])
             ->setFormattedAddress($result['formatted_address'])
             ->setGeometry($geometry)

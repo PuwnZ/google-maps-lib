@@ -25,7 +25,6 @@ return (new PhpCsFixer\Config())
                             'no_empty_phpdoc' => true,
                             'native_function_invocation' => true,
                             'fully_qualified_strict_types' => true,
-                            'single_blank_line_before_namespace' => true,
                             'php_unit_test_case_static_method_calls' => ['call_type' => 'self'],
                             'declare_strict_types' => true,
                             'header_comment' => [

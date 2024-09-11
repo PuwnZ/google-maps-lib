@@ -43,7 +43,7 @@ class GeocodeResultTest extends TestCase
             'mocked-type-2',
             'mocked-type-3',
         ];
-        $geocodeResult->setTypes(...$values);
+        $geocodeResult->setTypes($values);
 
         TestCase::assertEquals($values, $geocodeResult->getTypes());
     }

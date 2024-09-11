@@ -5,7 +5,7 @@ orbs:
 
 x-common: &x-common-php
   docker:
-    - image: puwnz/php-intl:7.3-alpine
+    - image: puwnz/php-intl:8.1-alpine
       environment:
         APP_ENV: test
   working_directory: /var/www/app
@@ -20,7 +20,8 @@ jobs:
       - run:
           name: install
           command: |
-            apk add --update git composer openssh-client
+            apk add --update git openssh-client
+            php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer
             composer install --no-scripts
             php -d memory_limit=-1 $(which composer) require friendsofphp/php-cs-fixer=^3.0 --no-scripts --dev
       - persist_to_workspace:
